@@ -1,9 +1,8 @@
 import prisma from "../utils/prisma";
 import { v4 as uuidv4 } from 'uuid';
-import { User } from '../utils/types'
 
 
-const createUser = async ({ idUser, name, email, password, phoneNumber, addressData, cityId, profileType }: User) => {
+const createUser = async ( idUser: string, name: string, email: string, password: string, phoneNumber:string, addressData: string, cityId: number, profileType: any ) => {
   try {
     const user = await prisma.user.create({
       data: {
@@ -34,4 +33,19 @@ const createUser = async ({ idUser, name, email, password, phoneNumber, addressD
   }
 };
 
-export { createUser };
+
+const getUser = async (email : string) =>{
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email
+      }
+    })
+
+    return user
+  } catch (error) {
+    return error
+  }
+}
+
+export { createUser, getUser };

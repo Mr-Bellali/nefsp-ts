@@ -14,4 +14,4 @@ class DbCnx {
 
 const prisma = DbCnx.getDbInstance()
 
-export default prisma
+export default prisma;

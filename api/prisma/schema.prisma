@@ -16,7 +16,6 @@ datasource db {
 model FoodCategory {
   idCategory   Int       @id @default(autoincrement())
   categoryName String
-  idSection    Int
   products     Product[]
 }
 
