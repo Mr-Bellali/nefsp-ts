@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply bg-[#F54D42] text-white px-4 py-2 rounded-lg font-medium inline-flex justify-center tracking-tight
+    }
+
+    .btn-primary {
+        @apply bg-[#F54D42] text-white
+    }
+
+    .btn-text {
+        @apply text-[#F54D42] bg-transparent font-semibold
+    }
+}
