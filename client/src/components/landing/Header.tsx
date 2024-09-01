@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import ArrowRight from "@/assets/arrow-right.svg";
 import Logo from "../../../public/logo.png";
@@ -6,7 +5,7 @@ import MenuIcon from "@/assets/menu.svg";
 
 const Header = () => {
   return (
-    <header className="sticky top-0">
+    <header className="sticky top-0 backdrop-blur-sm z-10">
       <div className="flex justify-center items-center bg-black text-white text-small gap-3">
         <p className="text-white/60 hidden md:block">don't waste food</p>
         <div className="inline-flex gap-1 items-center">

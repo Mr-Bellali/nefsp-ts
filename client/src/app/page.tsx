@@ -1,7 +1,15 @@
+import Header from "@/components/landing/Header";
 import Hero from "@/components/landing/Hero";
+import LogoTicker from "@/components/landing/LogoTicker";
+import ProductShowcase from "@/components/landing/ProductShowcase";
 
   export default function Home() {
     return (
-      <Hero />
+      <>
+        {/* <Header /> */}
+        <Hero />
+        <LogoTicker />
+        <ProductShowcase />
+      </>
     );
   }

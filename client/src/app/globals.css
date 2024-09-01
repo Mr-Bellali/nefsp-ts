@@ -14,4 +14,11 @@
     .btn-text {
         @apply text-[#F54D42] bg-transparent font-semibold
     }
+    .logo-ticker-img{
+        @apply h-8 w-auto;
+    }
+
+    .tag {
+        @apply text-sm inline-flex border border-[#222]/10 px-3 py-1 rounded-lg ; 
+    }
 }
