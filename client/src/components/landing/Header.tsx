@@ -6,7 +6,7 @@ import MenuIcon from "@/assets/menu.svg";
 const Header = () => {
   return (
     <header className="sticky top-0 backdrop-blur-sm z-10">
-      <div className="flex justify-center items-center bg-black text-white text-small gap-3">
+      <div className="flex justify-center items-center bg-black text-white text-small gap-3 ">
         <p className="text-white/60 hidden md:block">don't waste food</p>
         <div className="inline-flex gap-1 items-center">
           <p>Join us and start selling!</p>
@@ -19,8 +19,8 @@ const Header = () => {
           />
         </div>
       </div>
-      <div className="w-full px-24">
-        <div className="flex items-center justify-between max-w-full">
+      <div className="w-full px-24 bg-white shadow-lg">
+        <div className="flex items-center justify-between max-w-full ">
           <Image src={Logo} alt="logo" height={70} width={70} />
           <Image
             src={MenuIcon}
