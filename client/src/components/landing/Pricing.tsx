@@ -55,8 +55,10 @@ const pricingTiers = [
 
 const Pricing = () => {
   return (
+    // 
     <section className="py-24">
-      <div className="container mx-auto">
+      <div className="container">
+        <div className="max-w-[750px] mx-auto">
         <h2 className="text-center text-3xl md:[54px] md:leading=[60px] font-bold tracking-tighter mt-5">
           Pricing
         </h2>
@@ -64,7 +66,8 @@ const Pricing = () => {
           Free forever. Upgrade for unlimited tasks, better security, and
           exclusive features.
         </p>
-        <div className="flex flex-col gap-6 items-center mt-10 ">
+        </div>
+        <div className="flex flex-col gap-6 items-center  mt-10 lg:flex-row lg:items-end lg:justify-center">
           {pricingTiers.map(
             (
               { title, monthlyPrice, buttonText, popular, inverse, features },
