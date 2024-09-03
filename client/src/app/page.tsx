@@ -7,7 +7,7 @@ import ProductShowcase from "@/components/landing/ProductShowcase";
   export default function Home() {
     return (
       <>
-        {/* <Header /> */}
+        <Header />
         <Hero />
         <LogoTicker />
         <ProductShowcase />

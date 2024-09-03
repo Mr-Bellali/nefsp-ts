@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 const Hero = () => {
   return (
-    <section className="pt-8 pb-20 bg-[radial-gradient(ellipse_200%_100%_at_bottom_left,#FFCD00,#F5F5F5_66%)]">
-      <div className="container px-24 flex flex-row items-center">
+    <section className="pt-8 pb-20 bg-[radial-gradient(ellipse_200%_100%_at_bottom_left,#FFCD00,#F5F5F5_66%)] ">
+      <div className="container px-24 flex flex-row items-center ">
         <div className="flex-1">
           <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-b from-[#F54D42] to-[#FFCD00] text-transparent bg-clip-text">NEFSP</h1>
           <h3 className="text-3xl font-semibold tracking-tight mt-6">Reduce Food Waste, Save Money</h3>
