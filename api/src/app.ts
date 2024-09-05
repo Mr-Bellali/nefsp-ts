@@ -3,9 +3,6 @@ import routes from "./routes";
 import { config } from 'dotenv';
 config();
 
-const url = process.env.DATABASE_URL 
-
-console.log(url)
 
 const app = express()
 const PORT = 3000;
@@ -15,5 +12,5 @@ app.use("/api/v1",routes)
 
 
 app.listen(PORT, () =>{
-        console.log("Server is running on port 3000")
+        console.log("Access API on http://lohalhost:3000/api/v1")
 })

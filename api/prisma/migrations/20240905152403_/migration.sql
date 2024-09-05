@@ -2,7 +2,6 @@
 CREATE TABLE `FoodCategory` (
     `idCategory` INTEGER NOT NULL AUTO_INCREMENT,
     `categoryName` VARCHAR(191) NOT NULL,
-    `idSection` INTEGER NOT NULL,
 
     PRIMARY KEY (`idCategory`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -91,6 +90,7 @@ CREATE TABLE `User` (
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
     `phoneNumber` VARCHAR(191) NOT NULL,
+    `role` ENUM('SELLER', 'CONSUMER', 'ADMIN') NOT NULL DEFAULT 'CONSUMER',
 
     UNIQUE INDEX `User_email_key`(`email`),
     UNIQUE INDEX `User_phoneNumber_key`(`phoneNumber`),
@@ -101,7 +101,6 @@ CREATE TABLE `User` (
 CREATE TABLE `Profile` (
     `idProfile` VARCHAR(191) NOT NULL,
     `pictureUrl` VARCHAR(191) NULL,
-    `role` ENUM('SELLER', 'CONSUMER', 'ADMIN') NOT NULL DEFAULT 'CONSUMER',
     `idUser` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Profile_idUser_key`(`idUser`),

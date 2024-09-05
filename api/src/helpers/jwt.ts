@@ -3,14 +3,14 @@ import jwt, { SignOptions, JwtPayload } from "jsonwebtoken";
 interface User {
   id: string;
   email: string;
-  profile: string;
+  role: 'SELLER'| 'CONSUMER'|'ADMIN';
 }
 
 const generateToken = (user: User): string => {
   const payload = {
     id: user.id,
     email: user.email,
-    profile: user.profile,
+    role: user.role,
   };
 
   const secret = process.env.JWT_SECRET as string;
@@ -28,4 +28,8 @@ const verifyToken = (token: string): JwtPayload | null => {
   }
 };
 
-export { generateToken, verifyToken };
+const decodeToken = (token:string) : User  => {
+    return jwt.decode(token) as User
+}
+
+export { generateToken, verifyToken, decodeToken };

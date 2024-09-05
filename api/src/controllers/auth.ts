@@ -11,7 +11,7 @@ export const signUpController = async (req: Request, res: Response) => {
     console.log(req.body);
 
     const userId = uuidv4();
-    const { name, email, password, phonenumber, adress, cityId, profiletype } =
+    const { name, email, password, phonenumber, adress, cityId, role } =
       req.body;
 
     console.log("id", userId);
@@ -23,7 +23,7 @@ export const signUpController = async (req: Request, res: Response) => {
       phonenumber,
       adress,
       cityId,
-      profiletype
+      role
     );
 
     // Check if all required fields exist
@@ -32,10 +32,10 @@ export const signUpController = async (req: Request, res: Response) => {
     }
 
     // Check if profiletype is "admin", and deny if it is
-    if (profiletype?.toLowerCase() === "admin") {
+    if (role === "ADMIN") {
       return res
         .status(400)
-        .json({ error: "You are not allowed to be an admin!" });
+        .json({ error: "Operation not allowed" });
     }
 
     // Hash the password
@@ -52,7 +52,7 @@ export const signUpController = async (req: Request, res: Response) => {
       phonenumber,
       adress,
       cityId,
-      profiletype
+      role
     );
 
     return res.status(201).json({ user: createdUser });
