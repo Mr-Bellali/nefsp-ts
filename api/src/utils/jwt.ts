@@ -3,17 +3,33 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const generateToken = (user: any, secretKey: any) => {
-  const payload = {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    isManager: user.isManager,
-  };
-  console.log('Token Payload:', payload);
-  
-  const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
-  return token;
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'SELLER' | 'ADMIN' | 'CUSTOMER';
+  Password: string;
+}
+
+const secretKey:any = process.env.ACCESS_TOKEN_SECRET 
+
+const generateToken = (user: User) => {
+  try {
+    const payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+    console.log('Token Payload:', payload);
+    
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+    return token;
+  } catch (error) {
+    console.log("jwt.ts error:",error)
+    return error
+  }
 }
 
 export default generateToken;

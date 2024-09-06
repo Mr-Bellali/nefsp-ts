@@ -1,8 +1,12 @@
-import bcrypt from "bcryptjs";
+import bcrypt from 'bcrypt';
 
-const comparePasswords = async (password: string, hashedPassword:string) => {
-  const correctPassword = await bcrypt.compare(password, hashedPassword);
-  return correctPassword;
-}
+const comparePasswords = async (inputPassword: string, storedHash: string): Promise<boolean> => {
+  console.log("in the compare function:",inputPassword,"/n",storedHash)
+  
+  if (!inputPassword || !storedHash) {
+    throw new Error('Password or hash is undefined');
+  }
 
-export default comparePasswords;
+  return await bcrypt.compare(inputPassword, storedHash);
+};
+export default comparePasswords

@@ -38,6 +38,7 @@ const getUser = async (email : string) =>{
 
     return user
   } catch (error) {
+    console.log("model's error: ", error)
     return error
   }
 }
