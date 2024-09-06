@@ -92,7 +92,9 @@ export const loginController = async (req: Request, res: Response) => {
       return res.status(401).json({ error: "Incorrect email or password" });
     }
 
-    const token = generateToken(user);
+    const secretKey = process.env.ACCESS_TOKEN_SECRET 
+
+    const token = generateToken(user, secretKey);
 
     console.log(token)
     return res.status(200).json({ token });

@@ -1,27 +1,30 @@
-import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+"use client"
+import { Provider } from 'react-redux';
+import { store } from '@/redux/store'; // Adjust the path if necessary
 import "./globals.css";
-import Footer from "@/components/Footer";
-import Header from "@/components/landing/Header";
+import type { Metadata } from 'next';
+import { DM_Sans } from 'next/font/google';
 
-const inter = DM_Sans({ subsets: ["latin"] });
+const dmSans = DM_Sans({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: "NEFSP",
-  description: "save big food for a little money.",
+const metadata: Metadata = {
+  title: 'NEFSP',
+  description: 'Save big food for a little money.',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body>
-        
-        <main className="relative overflow-hidden ">{children}</main>
-        {/* <Footer /> */}
+      <body className={dmSans.className}>
+        <Provider store={store}>
+          <main className="relative overflow-hidden min-h-screen bg-gray-100">
+            {children}
+          </main>
+        </Provider>
       </body>
     </html>
   );

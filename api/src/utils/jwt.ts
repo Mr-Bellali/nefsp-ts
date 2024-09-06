@@ -12,9 +12,8 @@ interface User {
   Password: string;
 }
 
-const secretKey:any = process.env.ACCESS_TOKEN_SECRET 
 
-const generateToken = (user: User) => {
+const generateToken = (user: User, secretKey: any) => {
   try {
     const payload = {
       id: user.id,

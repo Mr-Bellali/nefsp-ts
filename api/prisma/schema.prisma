@@ -107,6 +107,9 @@ model Profile {
   user       User         @relation(fields: [idUser], references: [idUser])
   products   Product[]
   carts      Cart[]
+  storeName    String?       // Optional, only for SELLERS
+  storeAddress String?       // Optional, only for SELLERS
+  storeType    StoreType?
 }
 
 model City {
@@ -128,4 +131,12 @@ enum ProfileRoles {
   SELLER
   CONSUMER
   ADMIN
+}
+enum StoreType {
+  GROCERY
+  ELECTRONICS
+  CLOTHING
+  FURNITURE
+  RESTAURANT
+  OTHER
 }
