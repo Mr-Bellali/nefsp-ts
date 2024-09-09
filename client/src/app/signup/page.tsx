@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Logo from "../../../public/logo.png";
 import ManShopping from "@/assets/men-shopping-masculine.webp";
-import Buisinessform from "@/components/signup/Buisinessform";
+import Storedetailsform from "@/components/signup/Storedetailsform";
+
 
 const page = () => {
   return (
@@ -17,12 +18,12 @@ const page = () => {
       </div>
 
       {/* signup form */}
-      <div className="w-full md:w-3/5 h-screen flex flex-col items-center justify-center">
+      <div className="w-full md:w-3/5 h-full flex flex-col bg-slate-300 justify-start items-center">
         <div className="w-full h-[80px] px-5 flex md:hidden">
           <Image src={Logo} alt="logo" width={80} height={80} />
         </div>
-        <div className="w-full h-full mx-auto flex items-center justify-center p-8">
-          <Buisinessform />
+        <div className="w-full h-full mx-auto flex items-start justify-center ">
+          <Storedetailsform />
         </div>
       </div>
     </div>
