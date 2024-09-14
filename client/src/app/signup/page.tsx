@@ -1,7 +1,11 @@
+"use client"
 import Image from "next/image";
 import Logo from "../../../public/logo.png";
 import ManShopping from "@/assets/men-shopping-masculine.webp";
-import Storedetailsform from "@/components/signup/Storedetailsform";
+import Buisinessform from "@/components/signup/Buisinessform";
+import { FormProvider } from "@/components/signup/FormContext";
+import FormStep from "@/components/signup/FormStep";
+import MultiStepForm from "@/components/signup/MultiStepForm";
 
 
 const page = () => {
@@ -18,12 +22,12 @@ const page = () => {
       </div>
 
       {/* signup form */}
-      <div className="w-full md:w-3/5 h-full flex flex-col bg-slate-300 justify-start items-center">
-        <div className="w-full h-[80px] px-5 flex md:hidden">
+      <div className="w-full md:w-3/5 h-full flex flex-col justify-center items-center ">
+        <div className="w-full h-[80px] px-5 flex md:hidden ">
           <Image src={Logo} alt="logo" width={80} height={80} />
         </div>
-        <div className="w-full h-full mx-auto flex items-start justify-center ">
-          <Storedetailsform />
+        <div className="w-full h-full  flex items-start justify-center  px-38">
+          <MultiStepForm />
         </div>
       </div>
     </div>

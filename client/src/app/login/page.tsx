@@ -16,7 +16,7 @@ const page = () => {
       </div>
 
       {/* login part */}
-      <div className="w-full md:w-3/5  h-screen items-center justify-center">
+      <div className="w-full md:w-3/5  h-screen items-center justify-center px-60">
         <div className="container mx-auto">
           <div className="w-full h-[60px] px-5 md:hidden flex items-center justify-center">
             <Image src={Logo} alt="logo" width={80} height={80} />
@@ -24,13 +24,13 @@ const page = () => {
 
           {/* Red section with login form */}
           <div className="w-full flex flex-col justify-between items-center  ">
-            <div className="w-full h-screen flex justify-start items-center flex-col pt-10">
+            <div className="w-full h-screen flex justify-center items-center flex-col pt-10">
               <div className="w-full flex items-center pl-8">
                 <h2 className="text-3xl font-bold mb-6">
                   Login to your account
                 </h2>
               </div>
-              <form className="w-full p-8 flex flex-col justify-between  h-[100%] ">
+              <form className="w-full p-8 flex flex-col justify-between  h-[60%] ">
                 <div>
                   <div className="mb-4">
                     <label
@@ -61,23 +61,28 @@ const page = () => {
                     />
                   </div>
                   <div className="flex items-center justify-between">
+                    <div className="w-full flex flex-row justify-end mt-[-20px]">
                     <a
                       className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
                       href="#"
                     >
                       Forgot Password?
                     </a>
+                    </div>
                   </div>
                 </div>
                 <div>
-                    <p className="mb-1 text-gray-700 font-medium">Don &apos;t have an account? <span className="text-[#F54D42]">Sign Up</span></p>
-                    <div className="w-full h-[1px] bg-gray-400 mb-2"></div>
-                  <button
-                    className="btn-primary sm:mb-10 md:mb-[-30px] w-full h-[40px] rounded text-xl font-semibold"
+                <button
+                    className="btn-primary sm:mb-10 md:mb-[-30px] w-full h-[40px] rounded text-xl font-semibold mb-4"
                     type="button"
                   >
                     LOG IN
                   </button>
+                  {/* <div className="w-full h-[1px] bg-gray-400 mt-6"></div> */}
+<div className="mt-6 w-full flex flex-row justify-center">
+  
+<p className="mt-1 text-gray-700 font-medium ">Don &apos;t have an account? <span className="text-[#F54D42]">Sign Up</span></p>
+</div>                  
                 </div>
               </form>
             </div>
