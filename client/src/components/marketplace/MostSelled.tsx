@@ -1,5 +1,4 @@
 import Sardina from "@/assets/sardina.jpg";
-import Image from "next/image";
 import ProductCard from "./ProductCard";
 
 const categories = ["Drinks", "Chips", "Groceries", "Fish"];

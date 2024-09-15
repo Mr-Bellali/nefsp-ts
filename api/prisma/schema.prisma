@@ -90,26 +90,27 @@ model Order {
 }
 
 model User {
-  idUser      String    @id
+  idUser      String       @id
   name        String
-  email       String    @unique
+  email       String       @unique
   password    String
-  phoneNumber String    @unique
-  role       ProfileRoles @default(CONSUMER)
+  phoneNumber String       @unique
+  role        ProfileRoles @default(CONSUMER)
   profile     Profile?
   adresses    Address[]
 }
 
 model Profile {
-  idProfile  String       @id
-  pictureUrl String?
-  idUser     String       @unique
-  user       User         @relation(fields: [idUser], references: [idUser])
-  products   Product[]
-  carts      Cart[]
-  storeName    String?       // Optional, only for SELLERS
-  storeAddress String?       // Optional, only for SELLERS
+  idProfile    String     @id
+  pictureUrl   String?
+  idUser       String     @unique
+  user         User       @relation(fields: [idUser], references: [idUser])
+  products     Product[]
+  carts        Cart[]
+  storeName    String?
+  storeAddress String?
   storeType    StoreType?
+  storeImage   String
 }
 
 model City {
@@ -132,11 +133,18 @@ enum ProfileRoles {
   CONSUMER
   ADMIN
 }
+
 enum StoreType {
-  GROCERY
-  ELECTRONICS
-  CLOTHING
-  FURNITURE
-  RESTAURANT
-  OTHER
+  Restaurant
+  Cafe
+  Buffet_restaurant
+  Takeout_restaurant
+  Sushi_restaurant
+  Hotel_Bakery
+  Pastry_shop
+  Supermarket
+  Beverage_shop
+  Butcher_shop
+  Fruit_vegetable_store
+  Other
 }
