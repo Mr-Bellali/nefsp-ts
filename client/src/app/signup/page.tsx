@@ -2,9 +2,6 @@
 import Image from "next/image";
 import Logo from "../../../public/logo.png";
 import ManShopping from "@/assets/men-shopping-masculine.webp";
-import Buisinessform from "@/components/signup/Buisinessform";
-import { FormProvider } from "@/components/signup/FormContext";
-import FormStep from "@/components/signup/FormStep";
 import MultiStepForm from "@/components/signup/MultiStepForm";
 
 
