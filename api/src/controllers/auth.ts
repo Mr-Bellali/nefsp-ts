@@ -6,63 +6,77 @@ import comparePasswords from "../utils/comparePasswords";
 import generateToken from "../utils/jwt";
 import { config } from "dotenv";
 import { error } from "console";
+import { signupSchema } from "../schema/authSchema";
 config();
+import generator from "generate-password"
+import { sendMail } from "../utils/mailer";
 
-export const signUpController = async (req: Request, res: Response) => {
+
+// new signup controller 
+export const sellerSignUpController = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
+
+    console.log(req.body)
+
+    const parsedData = signupSchema.safeParse(req.body);
+
+    console.log(parsedData)
+
+    if (!parsedData.success) {
+      return res.status(400).json({ error: 'invalid input data', details: parsedData.error.errors });
+    }
+
+    const { storename, storeaddress, storetype, email } = parsedData.data;
+
+    console.log("store name: ", storename)
+    console.log("store adress: ", storeaddress)
+    console.log("store type: ",storetype)
+    console.log("email: ", email)
+
 
     const userId = uuidv4();
-    const { name, email, password, phonenumber, adress, cityId, role } =
-      req.body;
 
-    console.log("id", userId);
-    console.log(
-      "received data:",
-      name,
-      email,
-      password,
-      phonenumber,
-      adress,
-      cityId,
-      role
-    );
+    const splitedEmail = email.split('@');
+    const name = splitedEmail[0];
 
-    // Check if all required fields exist
-    if (!name || !email || !password || !phonenumber) {
-      return res.status(400).json({ error: "The fields are required!" });
-    }
+    const password = generator.generate({
+      length: 8,
+      numbers: true
+    });
 
-    // Check if profiletype is "admin", and deny if it is
-    if (role === "ADMIN") {
-      return res.status(400).json({ error: "Operation not allowed" });
-    }
-
-    // Hash the password
     const hashedPass = await hashPassword(password);
-    if (hashedPass instanceof Error) {
-      return res.status(500).json({error : "failed to hash the password try again!"})
-    }
-    console.log("\n\n\n\nhashed pass: ", hashedPass, "\n\n\n\n\n\n\n\n");
 
-    // Create the user
     const createdUser = await createUser(
       userId,
       name,
       email,
       hashedPass,
-      phonenumber,
-      adress,
-      cityId,
-      role
+      storeaddress, 
+      46,        // City ID for Rabat (default)
+      storename,     
+      storetype,     
+      storeaddress,  
+      'SELLER'     
     );
 
-    return res.status(201).json({ user: createdUser });
+
+  const from: string = 'NESFP team';
+  const to: string = 'bellali.yassine52@gmail.com';
+  const subject: string = 'credantials for login into platform';
+  const mailTemplate: string = `your account have been created seccuessfully, you can add aditional infos after you login to the platform.\nYou can use those credantials. \nemail: ${email}\npassword: ${password}`;
+
+  sendMail( from, to, subject, mailTemplate);
+
+
+    return res.status(201).json({ message: "User created successfully", user: createdUser});
+
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error });
+    console.error("Error during seller sign-up:", error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
 
 export const loginController = async (req: Request, res: Response) => {
   try {

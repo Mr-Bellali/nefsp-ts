@@ -1,16 +1,29 @@
 import { useForm } from "react-hook-form";
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
+import { signUpService } from "@/services/AuthService";
 
 type StepThreeProps = {
+  formData: any;
+  updateFormData: (newData: object) => void;
   onPrev: () => void;
+  setIsEmailSent: (value: boolean) => void; // Add setIsEmailSent prop
 };
 
-const StepThree = ({ onPrev }: StepThreeProps) => {
-  const { register, handleSubmit } = useForm();
+const StepThree = ({ formData, updateFormData, onPrev, setIsEmailSent }: StepThreeProps) => {
+  const { register, handleSubmit } = useForm({ defaultValues: formData });
 
-  const onHandleFormSubmit = () => {
-    alert("Form Submitted!");
-    // Handle form submission
+  const onHandleFormSubmit = async (data: any) => {
+    updateFormData(data);  // Save the final step's data before submission
+    try {
+      const response = await signUpService({ ...formData, ...data }); // send all collected data
+      if (response.status === 201) {
+        setIsEmailSent(true); // Set state to show SendEmail component
+      } else {
+        console.error('Unexpected response status:', response.status);
+      }
+    } catch (e) {
+      console.error('Sign-up failed:', e);
+    }
   };
 
   return (

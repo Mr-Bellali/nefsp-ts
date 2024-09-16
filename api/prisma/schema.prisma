@@ -91,10 +91,10 @@ model Order {
 
 model User {
   idUser      String       @id
-  name        String
+  name        String?
   email       String       @unique
   password    String
-  phoneNumber String       @unique
+  phoneNumber String?       @unique
   role        ProfileRoles @default(CONSUMER)
   profile     Profile?
   adresses    Address[]

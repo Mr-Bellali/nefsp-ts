@@ -3,6 +3,8 @@ import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftR
 import { useState } from 'react';
 
 type StoredetailsformProps = {
+  formData: any;
+  updateFormData: (newData: object) => void;
   onNext: () => void;
   onPrev: () => void;
 };
@@ -10,23 +12,24 @@ type StoredetailsformProps = {
 const StoreTypeOptions = [
   "Restaurant",
   "Cafe",
-  "Buffet restaurant",
-  "Takeout restaurant",
-  "Sushi restaurant",
-  "Hotel Bakery",
-  "Pastry shop",
+  "Buffet_restaurant",
+  "Takeout_restaurant",
+  "Sushi_restaurant",
+  "Hotel_Bakery",
+  "Pastry_shop",
   "Supermarket",
-  "Beverage shop",
-  "Butcher shop",
-  "Fruit & vegetable store",
+  "Beverage_shop",
+  "Butcher_shop",
+  "Fruit_vegetable store",
   "Other",
 ];
 
-const Storedetailsform = ({ onNext, onPrev }: StoredetailsformProps) => {
-  const { register, handleSubmit } = useForm();
+const Storedetailsform = ({ formData, updateFormData, onNext, onPrev }: StoredetailsformProps) => {
+  const { register, handleSubmit } = useForm({ defaultValues: formData });
   const [showAll, setShowAll] = useState(false);
 
-  const onHandleFormSubmit = () => {
+  const onHandleFormSubmit = (data: any) => {
+    updateFormData(data);
     onNext();
   };
 
@@ -47,10 +50,10 @@ const Storedetailsform = ({ onNext, onPrev }: StoredetailsformProps) => {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="storeadress">Store address</label>
+            <label htmlFor="storeaddress">Store address</label>
             <input
               type="text"
-              id="storeadress"
+              id="storeaddress"
               placeholder="Enter your store's address"
               className="h-11 px-4 border rounded-md"
               {...register("storeaddress")}
@@ -67,7 +70,7 @@ const Storedetailsform = ({ onNext, onPrev }: StoredetailsformProps) => {
                     type="radio"
                     id={type}
                     value={type}
-                    {...register("storeType")}
+                    {...register("storetype")}
                     className="checkbox-custom mr-2"
                   />
                   <label htmlFor={type} className="text-sm">{type}</label>

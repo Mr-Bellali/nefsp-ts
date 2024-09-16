@@ -1,13 +1,16 @@
 import { useForm } from "react-hook-form";
 
 type BuisinessformProps = {
+  formData: any;
+  updateFormData: (newData: object) => void;
   onNext: () => void;
 };
 
-const Buisinessform = ({ onNext }: BuisinessformProps) => {
-  const { register, handleSubmit } = useForm();
+const Buisinessform = ({ formData, updateFormData, onNext }: BuisinessformProps) => {
+  const { register, handleSubmit } = useForm({ defaultValues: formData });
 
-  const onHandleFormSubmit = () => {
+  const onHandleFormSubmit = (data: any) => {
+    updateFormData(data);
     onNext();
   };
 
@@ -29,17 +32,6 @@ const Buisinessform = ({ onNext }: BuisinessformProps) => {
       </div>
 
       <div className="w-full flex flex-col justify-center">
-        <div className="w-full flex flex-col mb-5">
-          <p className="text-sm text-center tracking-tighter text-gray-400">
-            By proceeding, you agree to NESFP&apos;s <a href="#" className="underline">Privacy Policy</a> and <a href="#" className="underline">Terms and Conditions</a>
-          </p>
-          <p className="text-md text-center tracking-tighter text-gray-500 font-light">
-            Already have a store account? <a href="/login" className="font-semibold text-[#F54D42]">Log in</a>
-          </p>
-        </div>
-
-        <div className="w-full h-[1px] bg-gray-400 mb-2" />
-
         <button type="submit" className="btn-primary h-11 w-full rounded-md">Next</button>
       </div>
     </form>

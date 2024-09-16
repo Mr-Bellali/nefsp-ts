@@ -1,7 +1,21 @@
 import prisma from "../utils/prisma";
+import { v4 as uuidv4 } from 'uuid';
+import { StoreType } from '@prisma/client';
 
 
-const createUser = async ( idUser: string, name: string, email: string, password: string, phoneNumber:string, addressData: string, cityId: number, role: 'CONSUMER'|'SELLER') => {
+
+const createUser = async (
+  idUser: string,
+  name: string,
+  email: string,
+  password: string,
+  addressData: string,
+  cityId: number,
+  storeName: string,
+  storeType: StoreType,
+  storeAddress: string,
+  role: 'CONSUMER' | 'SELLER'
+) => {
   try {
     const user = await prisma.user.create({
       data: {
@@ -9,7 +23,6 @@ const createUser = async ( idUser: string, name: string, email: string, password
         name,
         email,
         password,
-        phoneNumber,
         role,
         adresses: {
           create: {
@@ -17,6 +30,15 @@ const createUser = async ( idUser: string, name: string, email: string, password
             cityId,
           },
         },
+        profile: role === 'SELLER' ? {
+          create: {
+            idProfile: uuidv4(), 
+            storeName,
+            storeType,
+            storeAddress,
+            storeImage: "", 
+          },
+        } : undefined,
       },
     });
 
@@ -26,6 +48,8 @@ const createUser = async ( idUser: string, name: string, email: string, password
     throw new Error("Failed to create user.");
   }
 };
+
+
 
 
 const getUser = async (email : string) =>{
