@@ -32,24 +32,15 @@ model Product {
   originalPrice      Float
   expirationDate     DateTime
   sellingPrice       Float
-  stockOte           Int
+  stockQte           Int
   productDescription String
   idCategory         Int
-  idBrand            Int
   idProfile          String
   foodCategory       FoodCategory   @relation(fields: [idCategory], references: [idCategory])
-  brand              Brand          @relation(fields: [idBrand], references: [idBrand])
   profile            Profile        @relation(fields: [idProfile], references: [idProfile])
   cartItems          CartItem[]
   productImgs        ProductImage[]
   tags               Tag[]
-}
-
-model Brand {
-  idBrand          Int       @id @default(autoincrement())
-  brandName        String
-  brandDescription String
-  products         Product[]
 }
 
 model Tag {

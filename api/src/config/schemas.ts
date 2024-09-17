@@ -1,9 +1,7 @@
 import { z } from "zod";
 
-// Enums
 const ProfileRoles = z.enum(["SELLER", "CONSUMER", "ADMIN"]);
 
-// Lazy schemas to handle circular dependencies
 const FoodCategorySchema: z.ZodType<any> = z.lazy(() => z.object({
   categoryName: z.string(),
   products: z.array(ProductSchema).optional(),
@@ -14,17 +12,10 @@ const ProductSchema: z.ZodType<any> = z.lazy(() => z.object({
   originalPrice: z.number(),
   expirationDate: z.date(),
   sellingPrice: z.number(),
-  stockOte: z.number().int(),
+  stockQte: z.number().int(),
   productDescription: z.string(),
   idCategory: z.number().int(),
-  idBrand: z.number().int(),
   idProfile: z.string(),
-  foodCategory: FoodCategorySchema,
-  brand: BrandSchema,
-  profile: ProfileSchema,
-  cartItems: z.array(CartItemSchema).optional(),
-  productImgs: z.array(ProductImageSchema).optional(),
-  tags: z.array(TagSchema).optional(),
 }));
 
 const ProductImageSchema: z.ZodType<any> = z.lazy(() => z.object({
@@ -32,13 +23,6 @@ const ProductImageSchema: z.ZodType<any> = z.lazy(() => z.object({
   imageFilename: z.string(),
   productId: z.number().int(),
   product: ProductSchema,
-}));
-
-const BrandSchema: z.ZodType<any> = z.lazy(() => z.object({
-  idBrand: z.number().int().optional(),
-  brandName: z.string(),
-  brandDescription: z.string(),
-  products: z.array(ProductSchema).optional(),
 }));
 
 const TagSchema: z.ZodType<any> = z.lazy(() => z.object({
@@ -53,7 +37,6 @@ const CartSchema: z.ZodType<any> = z.lazy(() => z.object({
   createdAt: z.date().optional(),
   modifiedAt: z.date().optional(),
   idProfile: z.string(),
-  profile: ProfileSchema,
   cartItems: z.array(CartItemSchema).optional(),
   order: OrderSchema.optional(),
 }));
@@ -78,54 +61,47 @@ const OrderSchema: z.ZodType<any> = z.lazy(() => z.object({
   cart: CartSchema,
 }));
 
-const UserSchema: z.ZodType<any> = z.lazy(() => z.object({
-  idUser: z.string(),
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string(),
-  phoneNumber: z.string(),
-  profile: ProfileSchema.optional(),
-  adresses: z.array(AddressSchema).optional(),
-}));
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password : z.string(),
+})
 
-const ProfileSchema: z.ZodType<any> = z.lazy(() => z.object({
-  idProfile: z.string(),
-  pictureUrl: z.string().optional(),
-  role: ProfileRoles.default("CONSUMER"),
-  idUser: z.string(),
-  user: UserSchema,
-  products: z.array(ProductSchema).optional(),
-  carts: z.array(CartSchema).optional(),
-}));
 
-const CitySchema: z.ZodType<any> = z.lazy(() => z.object({
-  idCity: z.number().int().optional(),
-  cityName: z.string(),
-  adress: z.array(AddressSchema).optional(),
-}));
+const StoreTypeSchema = z.enum([
+  "Restaurant",
+  "Cafe",
+  "Buffet_restaurant",
+  "Takeout_restaurant",
+  "Sushi_restaurant",
+  "Hotel_Bakery",
+  "Pastry_shop",
+  "Supermarket",
+  "Beverage_shop",
+  "Butcher_shop",
+  "Fruit_vegetable_store",
+  "Other",
+]);
 
-const AddressSchema: z.ZodType<any> = z.lazy(() => z.object({
-  idAddress: z.number().int().optional(),
-  addressData: z.string(),
-  userId: z.string(),
-  cityId: z.number().int(),
-  user: UserSchema,
-  city: CitySchema,
-}));
+
+ const signupSchema = z.object({
+  storename: z.string(),                        
+  storeaddress: z.string(),                     
+  storetype: StoreTypeSchema,          
+  email: z.string().email("Invalid email address"), 
+});
+
+
 
 // Export all schemas
 export {
   FoodCategorySchema,
   ProductSchema,
   ProductImageSchema,
-  BrandSchema,
   TagSchema,
   CartSchema,
   CartItemSchema,
   OrderSchema,
-  UserSchema,
-  ProfileSchema,
-  CitySchema,
-  AddressSchema,
   ProfileRoles,
+  loginSchema,
+  signupSchema
 };

@@ -1,4 +1,6 @@
 import jwt, { SignOptions, JwtPayload } from "jsonwebtoken";
+import dotenv from 'dotenv'
+dotenv.config()
 
 interface User {
   id: string;
@@ -19,16 +21,19 @@ const generateToken = (user: User): string => {
   return jwt.sign(payload, secret, options);
 };
 
-const verifyToken = (token: string): JwtPayload | null => {
+const verifyToken = (token: any): JwtPayload | null => {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
-  } catch (error) {
+    if (!process.env.ACCESS_TOKEN_SECRET) {
+      throw new Error("JWT secret not provided");
+    }
+    return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string) as JwtPayload;
+  } catch (error: any) {
     console.error(error);
-    return null;
+    return error;
   }
 };
 
-const decodeToken = (token:string) : User  => {
+const decodeToken = (token:any) : User  => {
     return jwt.decode(token) as User
 }
 

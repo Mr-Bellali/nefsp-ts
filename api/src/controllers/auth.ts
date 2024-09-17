@@ -5,11 +5,10 @@ import { Request, Response } from "express";
 import comparePasswords from "../utils/comparePasswords";
 import generateToken from "../utils/jwt";
 import { config } from "dotenv";
-import { error } from "console";
-import { signupSchema } from "../schema/authSchema";
 config();
 import generator from "generate-password"
 import { sendMail } from "../utils/mailer";
+import { signupSchema } from "../config/schemas";
 
 
 // new signup controller 
