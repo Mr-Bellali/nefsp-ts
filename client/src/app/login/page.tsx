@@ -43,7 +43,7 @@ const Page = () => {
 
     try {
       const response = await loginService({ email, password });
-      console.log("Login response:", response); 
+      console.log("Login response:", response.token, { expires: 1/24}); 
       if (response instanceof Error) {
         toast.error(response.message); 
       } else {
@@ -70,7 +70,7 @@ const Page = () => {
       </div>
 
       {/* login part */}
-      <div className="w-full md:w-3/5 h-screen items-center justify-center px-60">
+      <div className="w-full md:w-3/5 h-screen items-center justify-center px-6">
         <div className="container mx-auto">
           <div className="w-full h-[60px] px-5 md:hidden flex items-center justify-center">
             <Image src={Logo} alt="logo" width={80} height={80} />

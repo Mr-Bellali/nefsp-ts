@@ -2,7 +2,7 @@ import Image from "next/image";
 import Logo from "../../../public/logo.png";
 const Navbar = () => {
   return (
-    <nav className="w-full h-[50px] px-40 mx-auto flex justify-between items-center">
+    <nav className="w-full h-[50px] flex justify-between items-center">
       <div>
         <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-b from-[#F54D42] to-[#FFCD00] text-transparent bg-clip-text">
           NFSP
