@@ -7,6 +7,8 @@ dotenv.config()
 const storage = multer.memoryStorage()
 const upload = multer({storage: storage})
 
+const imageUpload = upload.array('images',4)
+
 //cloudinary configuration
 cloudinary.config({
 cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -14,3 +16,4 @@ cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
+export { imageUpload }
