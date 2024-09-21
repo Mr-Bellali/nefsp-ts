@@ -13,7 +13,7 @@ const PopularCategories = () => {
       </div>
       <div className="flex">
         <div className="grid grid-cols-3 gap-4 w-full h-full">
-          <div className="overflow-hidden border border-red-600 rounded-xl flex flex-col gap-1 col-span-1 row-span-1 h-72 relative">
+          <div className="overflow-hidden border  rounded-xl flex flex-col gap-1 col-span-1 row-span-1 h-72 relative">
             <Image
               src={Bimoyat}
               alt="Dairy"
@@ -24,7 +24,7 @@ const PopularCategories = () => {
               <span className="text-white text-[60px] font-bold">Buiscuits</span>
             </div>
           </div>
-          <div className="overflow-hidden border border-purple-600 rounded-xl flex flex-col gap-1 col-span-1 row-span-1 h-72 relative">
+          <div className="overflow-hidden border rounded-xl flex flex-col gap-1 col-span-1 row-span-1 h-72 relative">
             <Image
               src={Cereals}
               alt="Cereals"
@@ -36,7 +36,7 @@ const PopularCategories = () => {
               <span className="text-white text-[60px] font-bold">Cereals</span>
             </div>
           </div>
-          <div className="overflow-hidden border border-blue-600 rounded-xl flex flex-col gap-1 col-span-1 row-span-3 relative">
+          <div className="overflow-hidden border  rounded-xl flex flex-col gap-1 col-span-1 row-span-3 relative">
             <Image
               src={Energy}
               alt="Energy"
@@ -48,7 +48,7 @@ const PopularCategories = () => {
               <span className="text-white text-[60px] font-bold">Energy <br /> Drinks</span>
             </div>
           </div>
-          <div className="overflow-hidden border border-green-600 rounded-xl flex flex-col gap-1 col-span-2 row-span-2 h-80 relative">
+          <div className="overflow-hidden border  rounded-xl flex flex-col gap-1 col-span-2 row-span-2 h-80 relative">
             <Image
               src={Dairy}
               alt="Dairy"
