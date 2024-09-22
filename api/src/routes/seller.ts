@@ -11,5 +11,8 @@ sellerProductRouter.post("/seller/product"/*,sellerRoleMiddleware*/,addProductCo
 sellerProductRouter.put("/seller/product",sellerRoleMiddleware)
 sellerProductRouter.delete("/seller/product",sellerRoleMiddleware)
 
+//get products 
+//get a product
+
 
 export default sellerProductRouter
