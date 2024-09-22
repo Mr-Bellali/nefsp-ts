@@ -20,43 +20,43 @@ const Store = () => {
   const [ isAuthenticated, setIsAuthenticated ] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    const tokenFromCookie = Cookies.get('token');
+  // useEffect(() => {
+  //   const tokenFromCookie = Cookies.get('token');
 
-    if (tokenFromCookie) {
-      try {
-        const decodedToken: any = jwtDecode(tokenFromCookie);
-        console.log(decodedToken);
-        const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+  //   if (tokenFromCookie) {
+  //     try {
+  //       const decodedToken: any = jwtDecode(tokenFromCookie);
+  //       console.log(decodedToken);
+  //       const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
 
-        console.log('Decoded token:', decodedToken);
-        console.log('Current time:', currentTime, 'Token expiration:', decodedToken.exp);
+  //       console.log('Decoded token:', decodedToken);
+  //       console.log('Current time:', currentTime, 'Token expiration:', decodedToken.exp);
 
-        // Check if the token is expired
-        if (decodedToken.exp && decodedToken.exp > currentTime) {
-          // Token is valid
-          dispatch({ type: 'SET_AUTHENTICATED', payload: true });
-          setIsAuthenticated(true)
-        } else {
-          // Token is expired
-          console.log('Token expired.');
-          dispatch({ type: 'SET_AUTHENTICATED', payload: false });
-          Cookies.remove('token'); // Remove expired token
-          router.push('/login'); // Redirect to login page
-        }
-      } catch (error) {
-        // Handle invalid token
-        console.error('Invalid token:', error);
-        dispatch({ type: 'SET_AUTHENTICATED', payload: false });
-        Cookies.remove('token'); // Remove invalid token
-        router.push('/login'); // Redirect to login page
-      }
-    } else {
-      // No token found
-      dispatch({ type: 'SET_AUTHENTICATED', payload: false });
-      router.push('/login'); // Redirect to login page
-    }
-  }, [dispatch, router]);
+  //       // Check if the token is expired
+  //       if (decodedToken.exp && decodedToken.exp > currentTime) {
+  //         // Token is valid
+  //         dispatch({ type: 'SET_AUTHENTICATED', payload: true });
+  //         setIsAuthenticated(true)
+  //       } else {
+  //         // Token is expired
+  //         console.log('Token expired.');
+  //         dispatch({ type: 'SET_AUTHENTICATED', payload: false });
+  //         Cookies.remove('token'); // Remove expired token
+  //         router.push('/login'); // Redirect to login page
+  //       }
+  //     } catch (error) {
+  //       // Handle invalid token
+  //       console.error('Invalid token:', error);
+  //       dispatch({ type: 'SET_AUTHENTICATED', payload: false });
+  //       Cookies.remove('token'); // Remove invalid token
+  //       router.push('/login'); // Redirect to login page
+  //     }
+  //   } else {
+  //     // No token found
+  //     dispatch({ type: 'SET_AUTHENTICATED', payload: false });
+  //     router.push('/login'); // Redirect to login page
+  //   }
+  // }, [dispatch, router]);
 
   const handleAddProductClick = () => {
     setModalOpen(true);
@@ -67,9 +67,9 @@ const Store = () => {
   };
 
   // If not authenticated, prevent rendering the store
-  if (!isAuthenticated) {
-    return null;
-  }
+  // if (!isAuthenticated) {
+  //   return null;
+  // }
 
   return (
     <div className=" px-32 min-h-screen bg-gray-100">
@@ -83,4 +83,4 @@ const Store = () => {
   );
 };
 
-export default Store;
+export default Store ;

@@ -11,8 +11,18 @@ module.exports = {
     "./node_modules/tw-elements/js/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 15s linear infinite',
+      },
+    },
   },
   darkMode: "class",
-  plugins: [require("tw-elements/plugin.cjs")]
-}
+  plugins: [require("tw-elements/plugin.cjs")],
+};
