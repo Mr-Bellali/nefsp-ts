@@ -21,7 +21,7 @@ model FoodCategory {
 
 model ProductImage {
   idImage       Int     @id @default(autoincrement())
-  imageFilename String
+  imageUrl String
   productId     Int
   product       Product @relation(fields: [productId], references: [idProduct])
 }

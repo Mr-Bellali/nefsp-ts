@@ -4,7 +4,6 @@ const getProducts = async () => {
   try {
     const products = await prisma.product.findMany({
       include: {
-        brand: true,
         foodCategory: true,
         profile: true,
         productImgs: true
@@ -29,7 +28,6 @@ const getSearchedProducts = async (searchedKey: any) => {
         ],
       },
       include: {
-        brand: true,
         foodCategory: true,
         profile: true,
         productImgs: true

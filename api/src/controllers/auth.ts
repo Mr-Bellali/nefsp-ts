@@ -10,8 +10,8 @@ import generator from "generate-password"
 import { sendMail } from "../utils/mailer";
 import { signupSchema } from "../config/schemas";
 
+let password
 
-// new signup controller 
 export const sellerSignUpController = async (req: Request, res: Response) => {
   try {
 
@@ -38,10 +38,12 @@ export const sellerSignUpController = async (req: Request, res: Response) => {
     const splitedEmail = email.split('@');
     const name = splitedEmail[0];
 
-    const password = generator.generate({
+    password = generator.generate({
       length: 8,
       numbers: true
     });
+
+    console.log(password);
 
     const hashedPass = await hashPassword(password);
 
@@ -66,8 +68,9 @@ export const sellerSignUpController = async (req: Request, res: Response) => {
 
   sendMail( from, to, subject, mailTemplate);
 
+  
 
-    return res.status(201).json({ message: "User created successfully", user: createdUser});
+  return res.status(201).json({ message: "User created successfully", user: createdUser});
 
   } catch (error) {
     console.error("Error during seller sign-up:", error);
@@ -75,7 +78,7 @@ export const sellerSignUpController = async (req: Request, res: Response) => {
   }
 };
 
-
+export const passwordTest = password
 
 export const loginController = async (req: Request, res: Response) => {
   try {

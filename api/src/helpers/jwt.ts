@@ -3,14 +3,14 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 interface User {
-  id: string;
+  idUser: string;
   email: string;
   role: 'SELLER'| 'CONSUMER'|'ADMIN';
 }
 
 const generateToken = (user: User): string => {
   const payload = {
-    id: user.id,
+    idUser: user.idUser,
     email: user.email,
     role: user.role,
   };

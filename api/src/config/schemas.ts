@@ -7,16 +7,16 @@ const FoodCategorySchema: z.ZodType<any> = z.lazy(() => z.object({
   products: z.array(ProductSchema).optional(),
 }));
 
-const ProductSchema: z.ZodType<any> = z.lazy(() => z.object({
+const ProductSchema = z.object({
   productName: z.string(),
-  originalPrice: z.number(),
-  expirationDate: z.date(),
-  sellingPrice: z.number(),
-  stockQte: z.number().int(),
+  originalPrice: z.coerce.number(), 
+  expirationDate: z.coerce.date(),  
+  sellingPrice: z.coerce.number(), 
+  stockQte: z.coerce.number(),     
   productDescription: z.string(),
-  idCategory: z.number().int(),
-  idProfile: z.string(),
-}));
+  idCategory: z.coerce.number(),   
+});
+
 
 const ProductImageSchema: z.ZodType<any> = z.lazy(() => z.object({
   idImage: z.number().int().optional(),

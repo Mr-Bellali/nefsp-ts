@@ -5,18 +5,17 @@ dotenv.config();
 
 
 interface User {
-  id: string;
+  idUser: string;
   name: string;
   email: string;
   role: 'SELLER' | 'ADMIN' | 'CUSTOMER';
-  Password: string;
 }
 
 
 const generateToken = (user: User, secretKey: any) => {
   try {
     const payload = {
-      id: user.id,
+      idUser: user.idUser,
       name: user.name,
       email: user.email,
       role: user.role,

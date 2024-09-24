@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import { decodeToken, verifyToken } from '../helpers/jwt';
 
-interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest extends Request {
     user?: any;
+    userid?: string;
 }
 
 type AcceptedRoles = ['SELLER' | 'CONSUMER' | 'ADMIN', ...('SELLER' | 'CONSUMER' | 'ADMIN')[]];
+
 
 export const checkRoleMiddleware =  (roles: AcceptedRoles): RequestHandler => {
     return (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
@@ -19,7 +21,9 @@ export const checkRoleMiddleware =  (roles: AcceptedRoles): RequestHandler => {
             const verifiedUser = verifyToken(token);
             if (verifiedUser) { 
                 req.user = verifiedUser;
-                const { role } = decodeToken(token);
+                const { role, idUser } = decodeToken(token);
+                req.userid = idUser
+
                 if (roles.includes(role)) {
                     next();
                 } else {
