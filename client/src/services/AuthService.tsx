@@ -1,6 +1,6 @@
 export const signUpService = async (data: object) => {
   try {
-    const fetchRes = await fetch('http://localhost:3000/api/v1/signup', {
+    const fetchRes = await fetch('http://127.0.0.1:3000/api/v1/signup', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -13,6 +13,7 @@ export const signUpService = async (data: object) => {
     if (!fetchRes.ok) {
       throw new Error(res.error || 'Something went wrong');
     }
+
 
     return res;
   } catch (e) {

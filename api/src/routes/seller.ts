@@ -18,10 +18,16 @@ sellerProductRouter.post("/seller/product",sellerRoleMiddleware,  upload.array('
     next();
 }, addProductController);
 
+
+//modify product
 sellerProductRouter.put("/seller/product",sellerRoleMiddleware)
+//delete product
 sellerProductRouter.delete("/seller/product",sellerRoleMiddleware)
 
 //get products 
+sellerProductRouter.get("/seller/products",sellerRoleMiddleware,)
+
+
 //get a product
 
 

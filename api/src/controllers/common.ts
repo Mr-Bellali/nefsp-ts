@@ -8,7 +8,9 @@ import { Request, Response } from "express";
 
 export const getProductsController = async (req: Request, res: Response) => {
   try {
-    const products = await getProducts();
+    const pageNumber = parseInt(req.query.pagenumber as string || '1', 10);
+    console.log(pageNumber)
+    const products = await getProducts(pageNumber);
     return res.status(200).json(products);
   } catch (error) {
     return res.status(500).json({ Error: error });
@@ -50,11 +52,9 @@ export const getProductController = async (req: Request, res: Response) => {
 
     if (!convertedId || Number.isNaN(convertedId)) {
       console.error("id is not a number");
-      return res
-        .status(400)
-        .json({
-          error: "error while recieving the key value from the request",
-        });
+      return res.status(400).json({
+        error: "error while recieving the key value from the request",
+      });
     }
 
     const product = await getProduct(convertedId);

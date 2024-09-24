@@ -1,74 +1,84 @@
-// import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-// import axios from 'axios';
-// import faker from 'faker';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import axios from 'axios';
+import { faker } from '@faker-js/faker';
+import { passwordTest } from '../controllers/auth'
+const apiUrl = 'http://localhost:3000/api/v1';
+let token: string;
 
-// const apiUrl = 'http://localhost:3000/api/v1';
-// let token: string;
-// let password: string;
 
-// describe('Seller Integration Tests', () => {
-//   beforeAll(async () => {
-//     // Step 1: Seller Sign Up
-//     const storeName = faker.company.companyName();
-//     const storeAddress = faker.address.streetAddress();
-//     const storeType = faker.commerce.department();
-//     const email = faker.internet.email();
+const sellerCredintials = {
+    storeName : faker.company.name(),
+    storeAddress: faker.location.streetAddress(),
+    storeType:faker.commerce.department(),
+    email:faker.internet.email()
+}
 
-//     // Using a utility function to create a random password
-//     password = faker.internet.password(8);
+describe('Seller Integration Tests', () => {
+  beforeAll(async () => {
+    // Step 1: Seller Sign Up
+    const storeName = sellerCredintials.storeName;
+    const storeAddress = sellerCredintials.storeAddress;
+    const storeType = sellerCredintials.storeType;
+    const email = sellerCredintials.email;
 
-//     const signUpResponse = await axios.post(`${apiUrl}/signup`, {
-//       storename: storeName,
-//       storeaddress: storeAddress,
-//       storetype: storeType,
-//       email: email,
-//     });
+    // Using a utility function to create a random password
 
-//     expect(signUpResponse.status).toBe(201);
-//     expect(signUpResponse.data.message).toBe('User created successfully');
-//   });
+   try {
+     const signUpResponse = await axios.post(`${apiUrl}/signup`, {
+       storename: storeName,
+       storeaddress: storeAddress,
+       storetype: storeType,
+       email: email,
+     });
+ 
+     expect(signUpResponse.status).toBe(201);
+     expect(signUpResponse.data.message).toBe('User created successfully');
+   } catch (error: any) {
+        console.error('Error:', error.message);
+   }
+  });
 
-//   it('should log in the seller', async () => {
-//     // Step 2: Seller Login
-//     const loginResponse = await axios.post(`${apiUrl}/login`, {
-//       email: faker.internet.email(), // Use the same email used during sign up
-//       password: password,             // Use the generated password
-//     });
+  it('should log in the seller', async () => {
+    // Step 2: Seller Login
+    const loginResponse = await axios.post(`${apiUrl}/login`, {
+      email: sellerCredintials.email, 
+      password: passwordTest,             
+    });
 
-//     expect(loginResponse.status).toBe(200);
-//     expect(loginResponse.data).toHaveProperty('token');
+    expect(loginResponse.status).toBe(200);
+    expect(loginResponse.data).toHaveProperty('token');
     
-//     // Store the token for future requests
-//     token = loginResponse.data.token;
-//   });
+    // Store the token for future requests
+    token = loginResponse.data.token;
+  });
 
-//   it('should create a product', async () => {
-//     // Step 3: Create Product
-//     const productResponse = await axios.post(
-//       `${apiUrl}/seller/product`,
-//       {
-//         productName: faker.commerce.productName(),
-//         originalPrice: faker.commerce.price(),
-//         expirationDate: faker.date.future().toISOString(),
-//         sellingPrice: faker.commerce.price(),
-//         stockQte: faker.datatype.number({ min: 1, max: 100 }),
-//         productDescription: faker.commerce.productDescription(),
-//         idCategory: faker.datatype.number({ min: 1, max: 10 }), // Assuming categories exist
-//         idProfile: 'sellerProfileId', // Replace with a valid profile ID if needed
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           'Content-Type': 'multipart/form-data', // Adjust if using form data
-//         },
-//       }
-//     );
+  it('should create a product', async () => {
+    // Step 3: Create Product
+    const productResponse = await axios.post(
+      `${apiUrl}/seller/product`,
+      {
+        productName: faker.commerce.productName(),
+        originalPrice: faker.commerce.price(),
+        expirationDate: faker.date.future().toISOString(),
+        sellingPrice: faker.commerce.price(),
+        stockQte: faker.number.int,
+        productDescription: faker.commerce.productDescription(),
+        idCategory: 1, 
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
 
-//     expect(productResponse.status).toBe(201);
-//     expect(productResponse.data.message).toBe('Product added successfully');
-//   });
+    expect(productResponse.status).toBe(201);
+    expect(productResponse.data.message).toBe('Product added successfully');
+  });
 
-//   afterAll(async () => {
-//     // Cleanup code if necessary (e.g., delete test user and product)
-//   });
-// });
+  afterAll(async () => {
+  });
+});
+
+

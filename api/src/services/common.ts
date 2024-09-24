@@ -1,8 +1,10 @@
 import prisma from "../utils/prisma";
 
-const getProducts = async () => {
+const getProducts = async (page: number) => {
   try {
     const products = await prisma.product.findMany({
+      skip: (page-1) * 60,
+      take: 60,
       include: {
         foodCategory: true,
         profile: true,

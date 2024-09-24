@@ -1,7 +1,7 @@
 import {  Response } from "express";
 import { ProductSchema } from "../config/schemas";
 import { AuthenticatedRequest } from "../middlewares/tokenVerification";
-import { addProduct, profileExists } from '../services/seller';
+import { addProduct, getSellerProducts, profileExists } from '../services/seller';
 
 
 //should get the profile Id from the jwt and store it in 
@@ -25,23 +25,25 @@ export const addProductController = async (req: AuthenticatedRequest, res: Respo
     const images = req.files as Express.Multer.File[];
 
 
-    let idProfile: string | undefined;
+    let idUser: string | undefined;
 
     if (req.userid != undefined) {
-      idProfile = req.userid 
+      idUser = req.userid 
     }
 
-    console.log(`\n\n\n\n\n\n---------------------\nid profile: ${idProfile}\n---------------------\n\n\n\n\n`)
+    console.log(`\n\n\n\n\n\n---------------------\nid user: ${idUser}\n---------------------\n\n\n\n\n`)
 
 
     //check if the profile exists 
 
-  //   const gottenProfile = await profileExists(idProfile as string)
+    const idProfile = await profileExists(idUser as string)
 
-  //   if (!profileExists) {
-  //     return res.status(400).json({ error: 'Profile does not exist' });
-  // }
+    if (!idProfile) {
+      return res.status(400).json({ error: 'Profile does not exist' });
+  }
 
+
+  console.log(`\n\n\n\n\n\n---------------------\nid profile: ${idProfile}\n---------------------\n\n\n\n\n`)
 
     const result = await addProduct(
       productName,
@@ -51,8 +53,7 @@ export const addProductController = async (req: AuthenticatedRequest, res: Respo
       Number(stockQte),
       productDescription,
       Number(idCategory),
-      // idProfile as string , 
-      "55b2f7c4-cecf-4a53-99d7-0b097c15194b",
+      idProfile as string , 
       images
     );
 
@@ -62,3 +63,24 @@ export const addProductController = async (req: AuthenticatedRequest, res: Respo
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getProductsController = async  (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userid = req.userid
+    const pageNumber = parseInt(req.query.pagenumber as string || '1', 10);
+
+
+    console.log("user id: ", userid);
+    console.log("page number:", pageNumber)
+
+    const profileid = await profileExists(userid as string)
+
+    console.log("profile ")
+
+    const sellerProducts = getSellerProducts(profileid as string, pageNumber)
+    return res.status(200).json(sellerProducts); 
+  } catch (error) {
+    return res.status(500).json({ Error: error });
+  }
+
+}
