@@ -93,6 +93,8 @@ export const loginController = async (req: Request, res: Response) => {
 
     const user: any = await getUser(email);
 
+    console.log(user)
+
     console.log(user);
 
     console.log("hashed password", user.password);
@@ -108,6 +110,8 @@ export const loginController = async (req: Request, res: Response) => {
     }
 
     const secretKey = process.env.ACCESS_TOKEN_SECRET;
+
+    console.log(secretKey)
 
     const token = generateToken(user, secretKey);
 

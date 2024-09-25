@@ -1,14 +1,13 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Logo from "../../../public/logo.png";
 import ManShopping from "@/assets/men-shopping-masculine.webp";
 import MultiStepForm from "@/components/signup/MultiStepForm";
 
-
-const page = () => {
+const Page = () => {
   return (
     <div className="w-full h-screen flex flex-row bg-white">
-      {/* Red section, hidden on tablet and phone */}
+      {/* Left section with image */}
       <div
         className="hidden md:flex w-2/5 flex-col justify-start bg-cover bg-center"
         style={{ backgroundImage: `url(${ManShopping.src})` }}
@@ -18,12 +17,12 @@ const page = () => {
         </div>
       </div>
 
-      {/* signup form */}
-      <div className="w-full md:w-3/5 h-full flex flex-col justify-center items-center ">
+      {/* Signup form section */}
+      <div className="w-full md:w-3/5 h-full flex flex-col justify-center items-center">
         <div className="w-full h-[80px] px-5 flex md:hidden ">
           <Image src={Logo} alt="logo" width={80} height={80} />
         </div>
-        <div className="w-full h-full  flex items-start justify-center  px-38">
+        <div className="w-full h-full flex items-start justify-center">
           <MultiStepForm />
         </div>
       </div>
@@ -31,4 +30,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -17,7 +17,7 @@ export const sellerGetProductServices = async (pageNumber: number) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Autherization": `Bearer ${tokenFromCookie}`
+          "Authorization": `Bearer ${tokenFromCookie}`
         },
       }
     );

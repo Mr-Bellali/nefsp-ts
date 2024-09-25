@@ -15,7 +15,7 @@ const Buisinessform = ({ formData, updateFormData, onNext }: BuisinessformProps)
   };
 
   return (
-    <form className="h-fit space-y-32 py-16 flex flex-col justify-between px-36" onSubmit={handleSubmit(onHandleFormSubmit)}>
+    <form className="h-fit space-y-32 py-16 flex flex-col justify-between " onSubmit={handleSubmit(onHandleFormSubmit)}>
       <div className="flex flex-col gap-1">
         <div className="w-full flex mb-16">
           <h1 className="text-3xl font-bold tracking-tight">Sign up your business</h1>

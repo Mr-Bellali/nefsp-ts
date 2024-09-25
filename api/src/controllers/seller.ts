@@ -77,7 +77,8 @@ export const getProductsController = async  (req: AuthenticatedRequest, res: Res
 
     console.log("profile ")
 
-    const sellerProducts = getSellerProducts(profileid as string, pageNumber)
+    const sellerProducts = await getSellerProducts(profileid as string, pageNumber)
+    console.log(sellerProducts)
     return res.status(200).json(sellerProducts); 
   } catch (error) {
     return res.status(500).json({ Error: error });

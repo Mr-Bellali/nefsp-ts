@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import {checkRoleMiddleware} from "../middlewares/tokenVerification";
-import { addProductController } from "../controllers/seller"
+import { addProductController, getProductsController } from "../controllers/seller"
 import { upload } from "../middlewares/fileUpload";
 import multer from "multer";
 
@@ -25,7 +25,7 @@ sellerProductRouter.put("/seller/product",sellerRoleMiddleware)
 sellerProductRouter.delete("/seller/product",sellerRoleMiddleware)
 
 //get products 
-sellerProductRouter.get("/seller/products",sellerRoleMiddleware,)
+sellerProductRouter.get("/seller/products",sellerRoleMiddleware,getProductsController)
 
 
 //get a product

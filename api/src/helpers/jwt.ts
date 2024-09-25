@@ -15,7 +15,7 @@ const generateToken = (user: User): string => {
     role: user.role,
   };
 
-  const secret = process.env.JWT_SECRET as string;
+  const secret = process.env.ACCESS_TOKEN_SECRET as string;
   const options: SignOptions = { expiresIn: "1h" };
 
   return jwt.sign(payload, secret, options);

@@ -89,7 +89,7 @@ export const getSellerProducts = async (idProfile: string, page: number) => {
   try {
     const products = await prisma.product.findMany({
       where: {
-        idProfile,
+        idProfile: idProfile,
       },
       skip: (page - 1) * 60,
       take: 60,

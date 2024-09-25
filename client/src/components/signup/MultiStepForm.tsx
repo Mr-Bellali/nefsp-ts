@@ -30,7 +30,7 @@ const MultiStepForm = () => {
   };
 
   return (
-    <div className="relative max-w-4xl mx-auto mt-10">
+    <div className="relative max-w-full mx-auto mt-10">
       {isEmailSent ? (
         <SendEmail /> // Conditionally render SendEmail component
       ) : (
