@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { toast } from 'react-toastify';
 
 const baseUrl = "http://127.0.0.1:3000/api/v1";
 
@@ -34,4 +35,32 @@ export const sellerGetProductServices = async (pageNumber: number) => {
     console.error("Error fetching products:", error);
     throw error;
   }
+};
+
+// Add a new product service 
+
+export const sellerAddProductService = async (data: object) => {
+  try {
+    const fetchRes = await fetch(
+      `${baseUrl}/seller/products`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${tokenFromCookie}`
+        },
+        body: JSON.stringify(data)
+      }
+    );
+    
+    const res = await fetchRes.json();
+    
+    if (!fetchRes.ok) {
+      throw new Error(res.error || "Something went wrong");
+    }
+    
+    return res;
+  } catch (error:any) {
+    toast.error(error.message || "Failed to add product!");
+    throw error; 
+   }
 };

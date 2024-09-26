@@ -2,6 +2,9 @@ import { useState } from "react";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { sellerAddProductService } from '@/services/SellerService'; // Adjust the path based on your structure
 
 interface ModalProps {
   isOpen: boolean;
@@ -14,7 +17,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [sellingPrice, setSellingPrice] = useState(0);
   const [expirationDate, setExpirationDate] = useState("");
   const [stockQuantity, setStockQuantity] = useState(0);
-  const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
 
@@ -33,20 +35,25 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     setImages(prevImages => prevImages.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Logic to submit the form data
-    console.log({
-      productName,
-      originalPrice,
-      sellingPrice,
-      expirationDate,
-      stockQuantity,
-      brand,
-      description,
-      images,
-    });
-    onClose();
+
+    const formData = new FormData();
+    formData.append('productName', productName);
+    formData.append('originalPrice', originalPrice.toString());
+    formData.append('sellingPrice', sellingPrice.toString());
+    formData.append('expirationDate', expirationDate);
+    formData.append('stockQuantity', stockQuantity.toString());
+    formData.append('description', description);
+    images.forEach((image, index) => formData.append(`images[${index}]`, image)); // Append each image to the form data
+
+    try {
+      await sellerAddProductService(formData);
+      toast.success("Product added successfully!");
+      onClose(); // Close the modal after successful submission
+    } catch (error) {
+      // Error toast is already handled in the service
+    }
   };
 
   if (!isOpen) return null;
@@ -131,17 +138,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
             </div>
-
-            <div className="mb-6">
-              <label className="block font-bold mb-2">Brand</label>
-              <input
-                type="text"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-                className="w-full border p-2 rounded text-gray-600"
-              />
-            </div>
-
             <div className="mb-6">
               <label className="block font-bold mb-2">Description</label>
               <textarea

@@ -92,14 +92,6 @@ const Store = () => {
         <ProductGrid products={products} />
         <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
       </main>
-      <div>
-        <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}>
-          Previous Page
-        </button>
-        <button onClick={() => setCurrentPage((prev) => prev + 1)}>
-          Next Page
-        </button>
-      </div>
     </div>
   );
 };
