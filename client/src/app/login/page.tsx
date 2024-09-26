@@ -145,7 +145,7 @@ const Page = () => {
                   </button>
                   <div className="mt-6 w-full flex flex-row justify-center">
                     <p className="mt-1 text-gray-700 font-medium">
-                      Don&apos;t have an account? <span className="text-[#F54D42]">Sign Up</span>
+                      Don&apos;t have an account? <span className="text-[#F54D42]"> <a href="/signup">Sign Up</a></span>
                     </p>
                   </div>
                 </div>

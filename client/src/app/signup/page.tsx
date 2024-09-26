@@ -25,6 +25,7 @@ const Page = () => {
         <div className="w-full h-full flex items-start justify-center">
           <MultiStepForm />
         </div>
+        
       </div>
     </div>
   );
