@@ -1,23 +1,27 @@
 import {  Response } from "express";
 import { ProductSchema } from "../config/schemas";
 import { AuthenticatedRequest } from "../middlewares/tokenVerification";
-import { addProduct, getSellerProducts, profileExists } from '../services/seller';
+import { addProduct, getSellerProduct, getSellerProducts, profileExists } from '../services/seller';
+import { error } from "console";
 
 
 //should get the profile Id from the jwt and store it in 
 
 export const addProductController = async (req: AuthenticatedRequest, res: Response) => {
   try {
+
+    console.log("\n\n\n\n\n---------------add product controller--------------\n\n\n\n\n\n")
     console.log("request body:", req.body);
     console.log("uploaded file:", req.files);
+    console.log("\n\n\n\n\n-----------------------------\n\n\n\n\n\n")
 
     const parsedData = ProductSchema.safeParse(req.body);
-    console.log(parsedData);
+    console.log(parsedData.error);
     if (!parsedData.success) {
       return res.status(400).json({ error: `Invalid inputs: ${parsedData.error.message}` });
     }
 
-    const { productName, originalPrice, expirationDate, sellingPrice, stockQte, productDescription, idCategory } = parsedData.data;
+    const { productName, originalPrice, expirationDate, sellingPrice, stockQuantity, description, idCategory } = parsedData.data;
 
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ error: 'No images uploaded' });
@@ -50,8 +54,8 @@ export const addProductController = async (req: AuthenticatedRequest, res: Respo
       Number(originalPrice),
       new Date(expirationDate),
       Number(sellingPrice),
-      Number(stockQte),
-      productDescription,
+      Number(stockQuantity),
+      description,
       Number(idCategory),
       idProfile as string , 
       images
@@ -85,3 +89,40 @@ export const getProductsController = async  (req: AuthenticatedRequest, res: Res
   }
 
 }
+
+export const getSellerProductController = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const productId = req.params['id']
+    const userid = req.userid
+
+    console.log("productID: ", productId, "\n", "userID : ", userid)
+
+
+    if (!productId || !userid ) {
+      res.status(400).json({error: `there's no product or user id is provided!!`})
+    }
+
+
+    const idProfile = await profileExists(userid as string)
+
+    if (!idProfile || idProfile instanceof error){
+      return res.status(404).json({error : 'id profile does not exists!'})
+    }
+
+
+    const product = await getSellerProduct(Number(productId), idProfile as string)
+
+    if (!product) {
+      return res.status(404).json({error: 'product not found'})
+    }
+
+    
+    return res.status(200).json(product)
+
+
+  } catch (error: any) {
+    return res.status(500).json({ Error: error.message });
+  }
+}
+
+

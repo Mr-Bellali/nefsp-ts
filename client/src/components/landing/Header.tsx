@@ -9,7 +9,7 @@ const Header = () => {
       <div className="flex justify-center items-center bg-black text-white text-small gap-3 ">
         <p className="text-white/60 hidden md:block">don't waste food</p>
         <div className="inline-flex gap-1 items-center">
-          <p>Join us and start selling!</p>
+          <p><a href="/store"> Join us and start selling!</a></p>
           <Image
             src={ArrowRight}
             alt="arrow right"

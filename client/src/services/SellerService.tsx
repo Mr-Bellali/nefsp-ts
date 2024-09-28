@@ -38,17 +38,16 @@ export const sellerGetProductServices = async (pageNumber: number) => {
 };
 
 // Add a new product service 
-
-export const sellerAddProductService = async (data: object) => {
+export const sellerAddProductService = async (data: FormData) => {
   try {
     const fetchRes = await fetch(
-      `${baseUrl}/seller/products`,
+      `${baseUrl}/seller/product`,
       {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${tokenFromCookie}`
         },
-        body: JSON.stringify(data)
+        body: data 
       }
     );
     
@@ -62,5 +61,31 @@ export const sellerAddProductService = async (data: object) => {
   } catch (error:any) {
     toast.error(error.message || "Failed to add product!");
     throw error; 
-   }
+  }
 };
+
+//get product by ID 
+
+export const getProducrService = async (productId : number) => {
+  try {
+    const fetchRes = await fetch(`${baseUrl}/seller/product/${productId}`, {
+      method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${tokenFromCookie}`
+      }
+    })
+
+    const res = await fetchRes.json();
+
+
+    if (!fetchRes.ok) {
+      throw new Error(res.error || "Something went wrong");
+    }
+
+    return res
+  } catch (error:any) {
+    toast.error(error.message || "Failed to add product!");
+    throw error; 
+  }
+}
+

@@ -26,3 +26,24 @@ export const productServices = async (pageNumber: number) => {
     throw error;
   }
 };
+
+export const getCategoriesService = async () => {
+  try {
+    const fetchRes = await fetch(`${baseUrl}/categories`,{
+      method: 'GET'
+    })
+
+    const res = await fetchRes.json();
+    
+    if (!fetchRes.ok) {
+      throw new Error(res.error || "Something went wrong");
+    }
+    
+    console.log("categories: ", res);
+    return res;
+
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+}

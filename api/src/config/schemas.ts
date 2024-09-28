@@ -12,9 +12,9 @@ const ProductSchema = z.object({
   originalPrice: z.coerce.number(), 
   expirationDate: z.coerce.date(),  
   sellingPrice: z.coerce.number(), 
-  stockQte: z.coerce.number(),     
-  productDescription: z.string(),
-  idCategory: z.coerce.number(),   
+  stockQuantity: z.coerce.number(),     
+  description: z.string(),
+  idCategory: z.coerce.number(), // Ensure this field is in the request body 
 });
 
 

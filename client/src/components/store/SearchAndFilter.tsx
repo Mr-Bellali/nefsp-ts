@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import AddIcon from '@mui/icons-material/Add';
 
 interface SearchAndFilterProps {
   onAddProduct: () => void;
@@ -20,13 +21,8 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({ onAddProduct }) => {
         placeholder="Search"
         className="border rounded-md py-2 px-4 w-1/3"
       />
-      <div className="space-x-2">
-        <button className="px-4 py-2 bg-red-500 text-white rounded-md">Drinks</button>
-        <button className="px-4 py-2 bg-gray-200 text-black rounded-md">Chips</button>
-        <button className="px-4 py-2 bg-gray-200 text-black rounded-md">Groceries</button>
-      </div>
       <button onClick={onAddProduct} className="px-4 py-2 bg-red-500 text-white rounded-md">
-        + Product
+        <AddIcon /> Product
       </button>
     </div>
   );

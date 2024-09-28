@@ -1,4 +1,5 @@
 import {
+  getCategories,
   getFoodCategories,
   getProduct,
   getProducts,
@@ -63,3 +64,13 @@ export const getProductController = async (req: Request, res: Response) => {
     return res.status(500).json({ Error: error });
   }
 };
+
+
+export const getCategoriesController = async (req: Request, res: Response) => {
+  try {
+    const categories = await getCategories()
+    return res.status(200).json(categories)
+  } catch (error: any) {
+    return res.status(500).json({error : error.message})
+  }
+}

@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { sellerAddProductService } from '@/services/SellerService'; // Adjust the path based on your structure
+import { sellerAddProductService } from '@/services/SellerService';
+import { getCategoriesService } from "@/services/CommonServices";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+interface Category {
+  idCategory: number;
+  categoryName: string;
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
@@ -19,6 +25,18 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [stockQuantity, setStockQuantity] = useState(0);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+
+ 
+  useEffect(() => {
+    if (isOpen) {
+      getCategoriesService().then(setCategories).catch((error) => {
+        toast.error("Failed to fetch categories");
+        console.error(error);
+      });
+    }
+  }, [isOpen]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -45,14 +63,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     formData.append('expirationDate', expirationDate);
     formData.append('stockQuantity', stockQuantity.toString());
     formData.append('description', description);
-    images.forEach((image, index) => formData.append(`images[${index}]`, image)); // Append each image to the form data
+    formData.append('idCategory', selectedCategory.toString());
+    images.forEach((image) => formData.append(`images`, image));
 
     try {
       await sellerAddProductService(formData);
       toast.success("Product added successfully!");
-      onClose(); // Close the modal after successful submission
-    } catch (error) {
-      // Error toast is already handled in the service
+      onClose(); 
+    } catch (error: any) {
+      toast.error(error.message)
     }
   };
 
@@ -61,20 +80,18 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white py-6 px-10 rounded-lg shadow-lg max-w-7xl w-full max-h-[98vh] relative overflow-hidden">
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-red-500 text-2xl">
           ✕
         </button>
 
-        {/* Modal Header */}
         <h2 className="text-2xl font-bold mb-4 text-center">Add Product</h2>
         <div className="w-full h-[1.5px] bg-slate-300 my-6"></div>
 
-        {/* Form */}
+
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-8 relative">
-          {/* Left side form */}
+
           <div className="pr-4">
             <div className="mb-6">
               <label className="block font-bold mb-2">Product name</label>
@@ -138,6 +155,23 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
             </div>
+
+            <div className="mb-6">
+              <label className="block font-bold mb-2">Category</label>
+              <select
+                value={selectedCategory ?? ""}
+                onChange={(e) => setSelectedCategory(parseInt(e.target.value))}
+                className="w-full border p-2 rounded text-gray-600"
+              >
+                <option value="" disabled>Select a category</option>
+                {categories.map((category) => (
+                  <option key={category.idCategory} value={category.idCategory}>
+                    {category.categoryName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="mb-6">
               <label className="block font-bold mb-2">Description</label>
               <textarea
@@ -148,10 +182,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Vertical Line Divider */}
+    
+    
           <div className="h-full w-[1.5px] bg-slate-300 absolute left-1/2 top-0"></div>
 
-          {/* Right side for image preview and upload */}
           <div className="flex flex-col items-center justify-start">
             <div className="w-full h-48 border flex flex-wrap justify-center items-center mb-5 bg-gray-100 rounded gap-6">
               {images.length === 0 ? (
@@ -179,11 +213,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             </label>
           </div>
 
-          {/* Confirm button */}
+        
           <div className="col-span-2 flex justify-end">
             <button
               type="submit"
-              className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+              className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              onClick={handleSubmit}
+              >
               Confirm
             </button>
           </div>

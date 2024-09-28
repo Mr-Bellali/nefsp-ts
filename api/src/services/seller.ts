@@ -106,6 +106,23 @@ export const getSellerProducts = async (idProfile: string, page: number) => {
   }
 };
 
+
+
+export const getSellerProduct = async (productId: number, idProfile: string) => {
+  try {
+    const product = await prisma.product.findUnique({
+      where: {
+        idProduct: productId,
+        idProfile: idProfile  // Ensure the product belongs to this profile
+      }
+    })
+    return product
+  } catch (error) {
+    return error
+  }
+}
+
+
 export const profileExists = async (idUser: string) => {
   try {
     const user = await prisma.user.findUnique({

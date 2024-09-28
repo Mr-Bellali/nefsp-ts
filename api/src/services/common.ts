@@ -58,6 +58,18 @@ const getFoodCategories = async () => {
   }
 };
 
+//get only categories 
+
+const getCategories = async () => {
+  try {
+    const categories = await prisma.foodCategory.findMany({});
+    return categories;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return error
+  }
+};
+
 // get food by id const 
 
 const getProduct = async (id: number) => {
@@ -73,4 +85,4 @@ const getProduct = async (id: number) => {
   }
 }
 
-export { getFoodCategories,getSearchedProducts, getProducts,getProduct };
+export { getFoodCategories,getSearchedProducts, getProducts,getProduct, getCategories};
