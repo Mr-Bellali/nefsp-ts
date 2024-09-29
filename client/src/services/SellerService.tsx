@@ -66,7 +66,7 @@ export const sellerAddProductService = async (data: FormData) => {
 
 //get product by ID 
 
-export const getProducrService = async (productId : number) => {
+export const getProducrService = async (productId : string) => {
   try {
     const fetchRes = await fetch(`${baseUrl}/seller/product/${productId}`, {
       method: 'GET',
@@ -82,10 +82,44 @@ export const getProducrService = async (productId : number) => {
       throw new Error(res.error || "Something went wrong");
     }
 
-    return res
+    return res;
   } catch (error:any) {
     toast.error(error.message || "Failed to add product!");
     throw error; 
   }
 }
+
+//update Product service 
+
+export const updateProductService = async (productId : string, data:FormData) => {
+  console.log("product id insidem the service: ",productId)
+  try {
+    
+    const fetchRes = await fetch(`${baseUrl}/seller/product/${productId}`, {
+      method: 'PUT',
+      headers: {
+        "Authorization": `Bearer ${tokenFromCookie}`
+      },
+      body: data
+    })
+
+    console.log("product id insidem the service: ",productId)
+
+    console.log("inside the service code: ", data)
+
+    const res = await fetchRes.json();
+
+
+    if (!fetchRes.ok) {
+      throw new Error(res.error || "Something went wrong");
+    }
+
+    return res;
+  } catch (error:any) {
+    toast.error(error.message || "Failed to add product!");
+    throw error; 
+  }
+}
+
+// delete Product service 
 

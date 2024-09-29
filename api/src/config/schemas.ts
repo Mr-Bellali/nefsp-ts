@@ -13,17 +13,21 @@ const ProductSchema = z.object({
   expirationDate: z.coerce.date(),  
   sellingPrice: z.coerce.number(), 
   stockQuantity: z.coerce.number(),     
-  description: z.string(),
-  idCategory: z.coerce.number(), // Ensure this field is in the request body 
+  description: z.string(), 
+  idCategory: z.coerce.number(), 
 });
 
 
-const ProductImageSchema: z.ZodType<any> = z.lazy(() => z.object({
-  idImage: z.number().int().optional(),
-  imageFilename: z.string(),
-  productId: z.number().int(),
-  product: ProductSchema,
-}));
+const UpdateProductSchema = z.object({
+  productName: z.string().optional(),
+  originalPrice: z.coerce.number().optional(), 
+  expirationDate: z.coerce.date().optional(),  
+  sellingPrice: z.coerce.number().optional(), 
+  stockQte: z.coerce.number().optional(),     
+  description: z.string().optional(),
+  idCategory: z.coerce.number().optional(), 
+});
+
 
 const TagSchema: z.ZodType<any> = z.lazy(() => z.object({
   idTag: z.number().int().optional(),
@@ -96,7 +100,7 @@ const StoreTypeSchema = z.enum([
 export {
   FoodCategorySchema,
   ProductSchema,
-  ProductImageSchema,
+  UpdateProductSchema,
   TagSchema,
   CartSchema,
   CartItemSchema,

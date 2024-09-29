@@ -1,5 +1,6 @@
 import {
   getCategories,
+  getCategory,
   getFoodCategories,
   getProduct,
   getProducts,
@@ -72,5 +73,31 @@ export const getCategoriesController = async (req: Request, res: Response) => {
     return res.status(200).json(categories)
   } catch (error: any) {
     return res.status(500).json({error : error.message})
+  }
+}
+
+export const getCategoryController = async (req:Request, res:Response) => {
+  try {
+    const id = req.params['id']
+
+    console.log(id)
+
+    if (!id) {
+      return res.status(400).json({error : "no id provided"})
+    }
+
+    const category = await getCategory(Number(id))
+
+    if (!category) {
+      return res.status(404).json({error : "no category found!"})
+    }
+
+    console.log(category)
+
+    return res.status(200).json(category)
+
+  } catch (error : any) {
+    console.log(error)
+    return res.status(500).json({error : `an internal error occured: ${error.message}`})
   }
 }

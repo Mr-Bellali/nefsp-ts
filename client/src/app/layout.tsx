@@ -4,6 +4,7 @@ import { store } from '@/redux/store'; // Adjust the path if necessary
 import "./globals.css";
 import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
 
 const dmSans = DM_Sans({ subsets: ['latin'] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <ToastContainer />
       <body className={dmSans.className}>
         <Provider store={store}>
           <main className="relative overflow-hidden min-h-screen bg-gray-100">

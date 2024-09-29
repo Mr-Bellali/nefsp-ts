@@ -85,4 +85,20 @@ const getProduct = async (id: number) => {
   }
 }
 
-export { getFoodCategories,getSearchedProducts, getProducts,getProduct, getCategories};
+// get category by id 
+
+const getCategory = async (id: number) => {
+  try {
+    const category = await prisma.foodCategory.findFirst({
+      where: {
+        idCategory : id
+      }
+    })
+
+    return category
+  } catch (error) {
+    return error
+  }
+}
+
+export { getFoodCategories,getSearchedProducts, getProducts,getProduct, getCategories, getCategory};

@@ -47,3 +47,5 @@ export const getCategoriesService = async () => {
     throw error;
   }
 }
+
+

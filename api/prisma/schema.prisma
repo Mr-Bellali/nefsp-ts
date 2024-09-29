@@ -41,6 +41,7 @@ model Product {
   cartItems          CartItem[]
   productImgs        ProductImage[]
   tags               Tag[]
+   @@unique([idProduct, idProfile])
 }
 
 model Tag {

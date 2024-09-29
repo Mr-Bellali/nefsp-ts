@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import {checkRoleMiddleware} from "../middlewares/tokenVerification";
-import { addProductController, getProductsController, getSellerProductController } from "../controllers/seller"
+import { addProductController, deleteProductController, getProductsController, getSellerProductController, updateProductController } from "../controllers/seller"
 import { upload } from "../middlewares/fileUpload";
 import multer from "multer";
 
@@ -22,9 +22,18 @@ sellerProductRouter.post("/seller/product",sellerRoleMiddleware,  upload.array('
 
 
 //modify product
-sellerProductRouter.put("/seller/product",sellerRoleMiddleware)
+sellerProductRouter.put("/seller/product/:id",sellerRoleMiddleware,  upload.array('images'), (err: any, req: Request, res: Response, next: NextFunction) => {
+    if (err instanceof multer.MulterError) {
+        console.log("inside the multer middleware:",err)
+        return res.status(400).json({ error: err.message });
+    } else if (err) {
+        console.log("inside the multer middleware:",err)
+        return res.status(500).json({ error: err.message });
+    }
+    next();
+},updateProductController)
 //delete product
-sellerProductRouter.delete("/seller/product",sellerRoleMiddleware/* ,deleteProductController */)
+sellerProductRouter.delete("/seller/product/:id",sellerRoleMiddleware,deleteProductController)
 
 //get products 
 sellerProductRouter.get("/seller/products",sellerRoleMiddleware,getProductsController)

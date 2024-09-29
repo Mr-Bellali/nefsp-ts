@@ -106,14 +106,15 @@ export const getSellerProducts = async (idProfile: string, page: number) => {
   }
 };
 
-
-
 export const getSellerProduct = async (productId: number, idProfile: string) => {
   try {
     const product = await prisma.product.findUnique({
       where: {
         idProduct: productId,
         idProfile: idProfile  // Ensure the product belongs to this profile
+      },
+      include: {
+        productImgs: true
       }
     })
     return product
@@ -122,6 +123,59 @@ export const getSellerProduct = async (productId: number, idProfile: string) => 
   }
 }
 
+//service to update a product 
+
+export const updateProduct = async (
+  productName: string,
+  productId: number,
+  originalPrice: number,
+  expirationDate: Date | undefined, 
+  sellingPrice: number,
+  stockQte: number,
+  productDescription: string,
+  idCategory: number
+) => {
+  try {
+    const updateData: any = {
+      productName,
+      originalPrice,
+      sellingPrice,
+      stockQte,
+      productDescription,
+      idCategory
+    };
+
+    if (expirationDate) {
+      updateData.expirationDate = expirationDate;
+    }
+
+    const updatedProduct = await prisma.product.update({
+      where: {
+        idProduct: productId,
+      },
+      data: updateData,
+    });
+
+    return updatedProduct; 
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw new Error("Failed to update product"); 
+  }
+};
+
+export const deleteProduct = async (productId: number, idProfile: string) => {
+  const deletedProduct = await prisma.product.delete({
+    where: {
+      idProduct: productId,
+      idProfile: idProfile  // Ensure the product belongs to this profile
+    },
+    include :{
+      productImgs: true,
+    }
+  });
+  console.log("inside services: ", deletedProduct)
+  return deletedProduct;
+}
 
 export const profileExists = async (idUser: string) => {
   try {
