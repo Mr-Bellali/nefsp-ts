@@ -2,7 +2,7 @@
 "use client"
 
 import HorizontalCarousel from "./HorizontalCarousel";
-import VerticalCarousel from "./VerticalCarousel";
+// import VerticalCarousel from "./VerticalCarousel";
 
 const Hero = () => {
 

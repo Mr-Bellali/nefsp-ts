@@ -26,7 +26,7 @@ const MostSelled = () => {
           ))}
         </div>
       </div>
-      <div className="mt-8 flex flex-row justify-between">
+      <div className="mt-8 flex flex-row justify-between overflow-auto">
         <div>
           <ProductCard
             title="Pringles"
@@ -67,7 +67,11 @@ const MostSelled = () => {
             category="Chips"
           />
         </div>
+        
       </div>
+      <div className="w-full flex justify-end">
+          <p className="text-xl text-red-500 underline"><a href="/marketplace/products">see more</a></p>
+        </div>
     </section>
   );
 };

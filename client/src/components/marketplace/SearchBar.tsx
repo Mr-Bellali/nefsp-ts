@@ -9,15 +9,12 @@ const SearchBar = ({ open, onClose }: any) => {
   return (
     <Box
       sx={{
-        position: 'absolute',
-        top: 10,
-        left: 500,
-        right: 0,
         backgroundColor: 'white',
         boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         alignItems: 'center',
-        width: 800,
+        width: '100%', // Full width
+        mb: 2, // Add margin-bottom for spacing
       }}
     >
       <TextField

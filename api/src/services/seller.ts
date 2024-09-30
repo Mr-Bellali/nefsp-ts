@@ -164,18 +164,52 @@ export const updateProduct = async (
 };
 
 export const deleteProduct = async (productId: number, idProfile: string) => {
-  const deletedProduct = await prisma.product.delete({
-    where: {
-      idProduct: productId,
-      idProfile: idProfile  // Ensure the product belongs to this profile
-    },
-    include :{
-      productImgs: true,
-    }
-  });
-  console.log("inside services: ", deletedProduct)
-  return deletedProduct;
-}
+  try {
+    // Delete related cart items
+    await prisma.cartItem.deleteMany({
+      where: {
+        idProduct: productId,
+      },
+    });
+
+    // Delete related product images
+    await prisma.productImage.deleteMany({
+      where: {
+        productId: productId,
+      },
+    });
+
+    // Optionally delete related tags (if you have product-tag relationships)
+    await prisma.tag.deleteMany({
+      where: {
+        products: {
+          some: {
+            idProduct: productId,
+          },
+        },
+      },
+    });
+
+    // Now delete the product itself
+    const deletedProduct = await prisma.product.delete({
+      where: {
+        idProduct_idProfile: {
+          idProduct: productId,
+          idProfile: idProfile,
+        },
+      },
+    });
+
+    console.log('Product deleted:', deletedProduct);
+    return deletedProduct;
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    throw error; // Make sure to rethrow so the controller can handle it
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 
 export const profileExists = async (idUser: string) => {
   try {

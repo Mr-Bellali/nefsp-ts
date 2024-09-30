@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sellerAddProductService } from '@/services/SellerService';
 import { getCategoriesService } from "@/services/CommonServices";
+import { useRouter } from 'next/navigation'
 
 interface ModalProps {
   isOpen: boolean;
@@ -28,7 +29,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
- 
+  const router = useRouter();
+
   useEffect(() => {
     if (isOpen) {
       getCategoriesService().then(setCategories).catch((error) => {
@@ -70,6 +72,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       await sellerAddProductService(formData);
       toast.success("Product added successfully!");
       onClose(); 
+      router.refresh();
     } catch (error: any) {
       toast.error(error.message)
     }

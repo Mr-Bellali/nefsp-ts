@@ -1,9 +1,13 @@
 import Pagination from "@mui/material/Pagination";
 
-const PaginationBar = () => {
+interface PaginationBarProps {
+  maxpages: number;
+}
+
+const PaginationBar: React.FC<PaginationBarProps> = ({ maxpages }) => {
   return (
-    <div className="flex w-full justify-center items-center">
-      <Pagination count={10} variant="outlined" shape="rounded" />
+    <div className="flex w-full justify-center items-center mb-10">
+      <Pagination count={maxpages} variant="outlined" shape="rounded" />
     </div>
   );
 };

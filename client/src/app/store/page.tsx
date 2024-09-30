@@ -18,35 +18,23 @@ const Store = () => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
 
-
   useEffect(() => {
     const tokenFromCookie = Cookies.get("token");
 
     if (tokenFromCookie) {
       try {
         const decodedToken: any = jwtDecode(tokenFromCookie);
-        console.log(decodedToken);
         const currentTime = Math.floor(Date.now() / 1000);
-
-        console.log("Decoded token:", decodedToken);
-        console.log(
-          "Current time:",
-          currentTime,
-          "Token expiration:",
-          decodedToken.exp
-        );
 
         if (decodedToken.exp && decodedToken.exp > currentTime) {
           dispatch({ type: "SET_AUTHENTICATED", payload: true });
           setIsAuthenticated(true);
         } else {
-          console.log("Token expired.");
           dispatch({ type: "SET_AUTHENTICATED", payload: false });
           Cookies.remove("token");
           router.push("/login");
         }
       } catch (error) {
-        console.error("Invalid token:", error);
         dispatch({ type: "SET_AUTHENTICATED", payload: false });
         Cookies.remove("token");
         router.push("/login");
@@ -89,7 +77,18 @@ const Store = () => {
       <Navbar />
       <main className="py-6">
         <SearchAndFilter onAddProduct={handleAddProductClick} />
-        <ProductGrid products={products} />
+        
+
+        {products.length > 0 ? (
+          <ProductGrid products={products} />
+        ) : (
+          <div className="flex justify-center items-center h-[50vh]">
+            <h2 className="text-2xl font-semibold text-gray-500 text-center">
+              There's no product yet, add yours
+            </h2>
+          </div>
+        )}
+        
         <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
       </main>
     </div>

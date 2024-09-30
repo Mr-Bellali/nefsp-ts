@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { getCategoriesService } from '@/services/CommonServices';
-import { updateProductService } from '@/services/SellerService';
+import { deleteProductService, updateProductService } from '@/services/SellerService';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation'
 
 // Modal Component
 const Modal = ({ isOpen, onClose, onConfirm }: { isOpen: boolean; onClose: () => void; onConfirm: () => void; }) => {
@@ -39,6 +40,8 @@ const ProductPreview = ({ product }: { product: any }) => {
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(product.idCategory);
 
+  const router = useRouter();
+
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
   };
@@ -52,7 +55,6 @@ const ProductPreview = ({ product }: { product: any }) => {
   };
 
   const handleUpdate = async () => {
-    // Ensure that all values are valid before sending
     const data = new FormData();
     data.append("productName", formData.productName || "");
     data.append("description", formData.productDescription || ""); // Make sure this is 'description'
@@ -72,12 +74,17 @@ const ProductPreview = ({ product }: { product: any }) => {
     }
   };
 
-  const handleDelete = () => {
-    console.log("Product Deleted");
-    setIsModalOpen(false); // Close modal after deletion
+  const handleDelete = async () => {
+    try {
+      await deleteProductService(product.idProduct)
+      toast.success("Product deleted successfully!");
+      router.push(`/store`);
+    } catch (error: any) {
+      toast.success("error occured while delting product: ",error.message);
+    }
+    setIsModalOpen(false);
   };
 
-  // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {

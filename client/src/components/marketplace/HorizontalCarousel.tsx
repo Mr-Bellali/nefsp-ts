@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { TECarousel, TECarouselItem } from 'tw-elements-react';
 import Image from 'next/image';
-import first from '@/assets/Paper-Bag-Kraft.png';
-import second from '@/assets/android_ios_phones.png';
-import third from '@/assets/woman-working.png';
+import first from '@/assets/slide1.png';
+import second from '@/assets/slide2.jpg';
+import third from '@/assets/slide3.jpg';
 
 const images = [
   { src: first, alt: 'First' },
@@ -35,10 +35,11 @@ const HorizontalCarousel = () => {
           >
             <Image
               src={image.src}
-              className="block w-full"
+              className="block w-full h-full"
               alt={image.alt}
-              width={120}
-              height={80} // Adjust height if needed
+              layout="responsive"
+              width={1920} 
+              height={2080}
             />
           </TECarouselItem>
         ))}

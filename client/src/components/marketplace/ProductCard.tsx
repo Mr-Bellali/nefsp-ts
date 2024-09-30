@@ -1,25 +1,28 @@
-import Image from 'next/image';
+"use client"
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
+import { useRouter } from 'next/navigation'
 
 interface ProductCardProps {
+  id: string;
   title: string;
   price: string;
   image: any; 
   category: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ title, price, image, category }) => {
-  return (
-    <div className="w-[215px] h-[325px] rounded-xl overflow-hidden bg-white relative">
-      <div className="w-full h-[60%] relative rounded-xl overflow-hidden border">
-        <Image
-          src={image}
-          alt={title}
-          layout="fill"
-          objectFit="cover"
-        />
+const ProductCard: React.FC<ProductCardProps> = ({id, title, price, image, category }) => {
+  const router = useRouter();
+  console.log("inside the product card: ", id)
 
+  const handleClick = () => {
+    router.push(`/marketplace/products/${id}`); // Ensure product id is pushed correctly
+  };
+
+  return (
+    <div className="w-[215px] h-[325px] rounded-xl overflow-hidden bg-white relative hover:cursor-pointer" onClick={handleClick}>
+      <div className="w-full h-[60%] relative rounded-xl overflow-hidden border">
+        <img src={image} alt={title} />
         {/* Heart Icon Button */}
         <IconButton
           sx={{
@@ -33,12 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, price, image, category
             },
           }}
         >
-          <FavoriteIcon sx={{
-             color: '#000000',
-             ':hover':{
-              color: '#ffffff'
-             }
-             }} />
+          <FavoriteIcon sx={{ color: '#000000', ':hover': { color: '#ffffff' }}} />
         </IconButton>
       </div>
       
@@ -56,6 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, price, image, category
       </div>
     </div>
   );
-}
+};
+
 
 export default ProductCard;

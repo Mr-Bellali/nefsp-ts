@@ -11,15 +11,15 @@ import Logo from "../../../public/logo.png";
 import Image from "next/image";
 import SearchBar from './SearchBar'; 
 
-const Header = () => {
+const Header = ({ onSearchClick }: any) => { // Pass onSearchClick prop
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false); // Manage search bar visibility
-  const isMediumScreen = useMediaQuery("(max-width:960px)"); // Medium screens and below
-  const isMobileScreen = useMediaQuery("(max-width:600px)"); // Mobile screens and below
+  const [searchOpen, setSearchOpen] = useState(false);
+  const isMediumScreen = useMediaQuery("(max-width:960px)");
+  const isMobileScreen = useMediaQuery("(max-width:600px)");
 
   const handleMenuOpen = () => setMenuOpen(true);
   const handleMenuClose = () => setMenuOpen(false);
-  const handleSearchToggle = () => setSearchOpen(prev => !prev); // Toggle search bar
+  const handleSearchToggle = () => setSearchOpen(prev => !prev);
 
   return (
     <nav>
@@ -27,7 +27,7 @@ const Header = () => {
         display={"flex"}
         alignItems={"center"}
         justifyContent={"space-between"}
-        sx={{ position: 'relative' }} // Ensure the search bar shows at the top
+        sx={{ position: 'relative' }}
       >
         {isMediumScreen ? (
           <IconButton onClick={handleMenuOpen}>
@@ -69,7 +69,6 @@ const Header = () => {
         </Box>
 
         <Box sx={{ fontSize: "24px", fontWeight: "700", display: "flex", justifyContent: "center", gap: 2 }}>
-          {/* Search Icon */}
           <IconButton sx={{ color: "black", ":hover": { color: "#F54D42" }, fontSize: "24px", padding: 0 }} onClick={handleSearchToggle}>
             <SearchIcon sx={{ fontSize: "24px" }} />
           </IconButton>
@@ -90,7 +89,7 @@ const Header = () => {
         </Box>
       </Box>
 
-      {/* Search Bar */}
+      {/* Pass the searchOpen and onClose props to SearchBar */}
       <SearchBar open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* Drawer for the burger menu */}

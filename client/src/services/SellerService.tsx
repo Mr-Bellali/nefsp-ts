@@ -123,3 +123,25 @@ export const updateProductService = async (productId : string, data:FormData) =>
 
 // delete Product service 
 
+export const deleteProductService = async (productId : string) => {
+  try {
+    const fetchRes = await fetch(`${baseUrl}/seller/product/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        "Authorization": `Bearer ${tokenFromCookie}`
+      }
+    })
+
+    const res = await fetchRes.json();
+
+
+    if (!fetchRes.ok) {
+      throw new Error(res.error || "Something went wrong");
+    }
+
+    return res;
+  } catch (error:any) {
+    toast.error(error.message || "Failed to add product!");
+    throw error; 
+  }
+}

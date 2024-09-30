@@ -5,15 +5,34 @@ import {
   getProduct,
   getProducts,
   getSearchedProducts,
+  getTotalProductsCount,
 } from "../services/common";
 import { Request, Response } from "express";
 
 export const getProductsController = async (req: Request, res: Response) => {
   try {
     const pageNumber = parseInt(req.query.pagenumber as string || '1', 10);
-    console.log(pageNumber)
-    const products = await getProducts(pageNumber);
-    return res.status(200).json(products);
+    const limit = 30; 
+
+    // Fetch products and total count
+    const [products, totalCount] = await Promise.all([
+      getProducts(pageNumber, limit),
+      getTotalProductsCount()
+    ]);
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalCount / limit);
+
+    // Send response with products and pagination info
+    return res.status(200).json({
+      data: products,
+      meta: {
+        totalItems: totalCount,
+        currentPage: pageNumber,
+        totalPages: totalPages,
+        itemsPerPage: limit,
+      },
+    });
   } catch (error) {
     return res.status(500).json({ Error: error });
   }
@@ -51,6 +70,7 @@ export const getProductController = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     const convertedId = Number(id);
+    console.log(`recievied id: ${convertedId}`)
 
     if (!convertedId || Number.isNaN(convertedId)) {
       console.error("id is not a number");
@@ -58,6 +78,7 @@ export const getProductController = async (req: Request, res: Response) => {
         error: "error while recieving the key value from the request",
       });
     }
+
 
     const product = await getProduct(convertedId);
     return res.status(200).json(product);
