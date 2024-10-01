@@ -43,13 +43,13 @@ const Header = ({ onSearchClick }: any) => { // Pass onSearchClick prop
               gap: 2,
             }}
           >
-            <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="#">
+            <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="/">
               Home
             </Link>
             <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="#">
               About
             </Link>
-            <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="#">
+            <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="/store">
               Store
             </Link>
             <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="#">
@@ -58,7 +58,7 @@ const Header = ({ onSearchClick }: any) => { // Pass onSearchClick prop
             <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="#">
               Support
             </Link>
-            <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="#">
+            <Link sx={{ ":hover": { cursor: "pointer", color: "#F54D42" } }} underline="none" color="black" href="/signup">
               SignUp
             </Link>
           </Box>

@@ -1,0 +1,58 @@
+version: '2.2'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: nefsp
+    ports:
+      - '3307:3306'
+    networks:
+      - node-webapp-network
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '--silent']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin
+    restart: always
+    ports:
+      - '8090:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: 12345678
+    networks:
+      - node-webapp-network
+  backend:
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    env_file:
+      - ./api/.env
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    networks:
+      - node-webapp-network
+
+  nextapp:
+    container_name: nextapp
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    networks:
+      - node-webapp-network
+    depends_on:
+      - backend
+networks:
+  node-webapp-network:
+    driver: bridge

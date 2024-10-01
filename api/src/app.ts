@@ -5,7 +5,7 @@ config();
 import cors from 'cors';
 
 const app = express()
-const PORT = 3000;
+const PORT = 8080;
 
 app.use(cors());
 app.use(express.json());
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/api/v1", routes)
 
 app.listen(PORT, () => {
-        console.log("Access API on http://lohalhost:3000/api/v1")
+        console.log(`Access API on http://lohalhost:${PORT}/api/v1`)
 })
 
 export default app

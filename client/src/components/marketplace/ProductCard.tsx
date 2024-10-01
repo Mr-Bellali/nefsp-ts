@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({id, title, price, image, categ
       <div className="w-full h-[60%] relative rounded-xl overflow-hidden border">
         <img src={image} alt={title} />
         {/* Heart Icon Button */}
-        <IconButton
+        {/* <IconButton
           sx={{
             position: 'absolute',
             top: '10px',
@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({id, title, price, image, categ
           }}
         >
           <FavoriteIcon sx={{ color: '#000000', ':hover': { color: '#ffffff' }}} />
-        </IconButton>
+        </IconButton> */}
       </div>
       
       {/* Product Details */}

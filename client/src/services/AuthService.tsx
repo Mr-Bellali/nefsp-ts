@@ -1,6 +1,6 @@
 export const signUpService = async (data: object) => {
   try {
-    const fetchRes = await fetch('http://127.0.0.1:3000/api/v1/signup', {
+    const fetchRes = await fetch('http://127.0.0.1:8080/api/v1/signup', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -24,7 +24,7 @@ export const signUpService = async (data: object) => {
 
 export const loginService = async (data: object) => {
   try {
-    const fetchRes = await fetch('http://localhost:3000/api/v1/login', {
+    const fetchRes = await fetch('http://localhost:8080/api/v1/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
